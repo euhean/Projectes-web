@@ -1,530 +1,282 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemples Visualitzacions Turisme Catalunya</title>
-    <!-- Instruccions per descarregar: 
-         1. Fes clic dret a la pàgina → "Desa com a..." 
-         2. Canvia l'extensió a .html si cal
-         3. Obre l'arxiu amb qualsevol navegador
-    -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            overflow: hidden;
-        }
-        
-        .header {
-            background: linear-gradient(135deg, #6C91C2, #6CBF84);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-        
-        .header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            font-weight: 300;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-        }
-        
-        .content {
-            padding: 40px;
-        }
-        
-        .chart-section {
-            margin-bottom: 50px;
-            padding: 30px;
-            background: #f8f9fa;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        
-        .chart-title {
-            color: #6C91C2;
-            font-size: 1.8em;
-            font-weight: 600;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        
-        .chart-subtitle {
-            color: #666;
-            text-align: center;
-            margin-bottom: 30px;
-            font-style: italic;
-        }
-        
-        .chart-container {
-            position: relative;
-            height: 400px;
-            margin: 20px 0;
-        }
-        
-        .chart-small {
-            height: 300px;
-        }
-        
-        .flourish-style {
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-            background: white;
-            padding: 20px;
-        }
-        
-        .insights {
-            background: #e8f4f8;
-            border-left: 4px solid #6CBF84;
-            padding: 20px;
-            margin-top: 20px;
-            border-radius: 0 8px 8px 0;
-        }
-        
-        .insights h4 {
-            color: #6CBF84;
-            margin-top: 0;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin: 30px 0;
-        }
-        
-        .stat-card {
-            background: white;
-            padding: 25px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            border-top: 4px solid #6CBF84;
-        }
-        
-        .stat-number {
-            font-size: 2.5em;
-            font-weight: bold;
-            color: #6C91C2;
-            margin-bottom: 10px;
-        }
-        
-        .stat-label {
-            color: #666;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        
-        .interactive-demo {
-            background: linear-gradient(45deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            margin: 30px 0;
-            text-align: center;
-        }
-        
-        .demo-button {
-            background: rgba(255,255,255,0.2);
-            border: 2px solid white;
-            color: white;
-            padding: 12px 30px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 1.1em;
-            margin: 10px;
-            transition: all 0.3s ease;
-        }
-        
-        .demo-button:hover {
-            background: white;
-            color: #667eea;
-            transform: translateY(-2px);
-        }
-        
-        .flourish-footer {
-            text-align: center;
-            padding: 20px;
-            color: #999;
-            font-size: 0.9em;
-            background: #f8f9fa;
-            margin-top: 40px;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tere y Oskar</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Crimson+Text:ital,wght@0,400;0,600;1,400;1,600&family=Yeseva+One&family=Playfair+Display:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>Visualitzacions d'Establiments Turístics de Catalunya</h1>
-            <p>Exemples interactius per inspirar la teva pràctica amb Flourish</p>
-        </div>
-        
-        <div class="content">
-            <!-- Estadístiques generals -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-number">2.847</div>
-                    <div class="stat-label">Establiments totals</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">156.432</div>
-                    <div class="stat-label">Places totals</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">68%</div>
-                    <div class="stat-label">Ocupació mitjana</div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-number">12</div>
-                    <div class="stat-label">Tipus d'allotjament</div>
-                </div>
-            </div>
-            
-            <!-- Gràfic 1: Distribució per tipus -->
-            <div class="chart-section">
-                <h2 class="chart-title">Distribució d'Establiments per Tipus</h2>
-                <p class="chart-subtitle">Percentatge d'establiments turístics segons la seva categoria</p>
-                <div class="flourish-style">
-                    <div class="chart-container">
-                        <canvas id="pieChart"></canvas>
-                    </div>
-                </div>
-                <div class="insights">
-                    <h4>Insights clau:</h4>
-                    <p>Els hotels representen el 45% dels establiments, seguits per les cases rurals (28%) i els apartaments turístics (18%). Aquesta distribució mostra la diversificació de l'oferta turística catalana.</p>
-                </div>
-            </div>
-            
-            <!-- Gràfic 2: Evolució temporal -->
-            <div class="chart-section">
-                <h2 class="chart-title">Evolució de Noves Obertures (2019-2024)</h2>
-                <p class="chart-subtitle">Nombre d'establiments oberts per any i trimestre</p>
-                <div class="flourish-style">
-                    <div class="chart-container">
-                        <canvas id="lineChart"></canvas>
-                    </div>
-                </div>
-                <div class="insights">
-                    <h4>Insights clau:</h4>
-                    <p>Es pot observar una clara recuperació del sector després de la pandèmia, amb un pic d'obertures el 2023. La tendència estacional mostra més obertures al segon trimestre.</p>
-                </div>
-            </div>
-            
-            <!-- Gràfic 3: Distribució geogràfica -->
-            <div class="chart-section">
-                <h2 class="chart-title">Capacitat d'Allotjament per Comarques</h2>
-                <p class="chart-subtitle">Nombre total de places disponibles per comarca</p>
-                <div class="flourish-style">
-                    <div class="chart-container">
-                        <canvas id="barChart"></canvas>
-                    </div>
-                </div>
-                <div class="insights">
-                    <h4>Insights clau:</h4>
-                    <p>El Barcelonès lidera amb diferència la capacitat d'allotjament, seguit per la Selva (Costa Brava) i l'Alt Empordà. Aquesta distribució reflecteix els principals focus turístics catalans.</p>
-                </div>
-            </div>
-            
-            <!-- Demo interactiu -->
-            <div class="interactive-demo">
-                <h3>Funcionalitats Interactives de Flourish</h3>
-                <p>Aquests són exemples del tipus d'interactivitat que podràs afegir als teus gràfics:</p>
-                <button class="demo-button" onclick="toggleData()">Canviar Vista</button>
-                <button class="demo-button" onclick="animateCharts()">Animar Gràfics</button>
-                <button class="demo-button" onclick="showFilters()">Mostrar Filtres</button>
-            </div>
-            
-            <!-- Gràfic 4: Comparativa estacional -->
-            <div class="chart-section">
-                <h2 class="chart-title">Ocupació Estacional per Tipus d'Establiment</h2>
-                <p class="chart-subtitle">Percentatge d'ocupació al llarg de l'any</p>
-                <div class="flourish-style">
-                    <div class="chart-container chart-small">
-                        <canvas id="radarChart"></canvas>
-                    </div>
-                </div>
-                <div class="insights">
-                    <h4>Insights clau:</h4>
-                    <p>Els apartaments turístics mostren menys variació estacional que els hotels tradicionals. Les cases rurals tenen el seu pic a la tardor i hivern.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="flourish-footer">
-            <p>Exemples creats per il·lustrar les possibilitats de Flourish Studio</p>
-            <p>Dades simulades basades en patrons reals del turisme català</p>
-        </div>
+  <button class="theme-toggle" onclick="toggleTheme()">🌙</button>
+
+  <nav aria-label="Menú principal">
+    <a href="#inicio">Inicio</a>
+    <a href="#historia">Historia</a>
+    <a href="#informacion">Información</a>
+    <a href="#comentarios">Comentarios</a>
+    <a href="#contacto">Contacto</a>
+  </nav>
+
+  <section class="hero" id="inicio">
+    <div class="hero-slide active" style="background-image: url('img/hero-1.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('img/hero-2.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('img/hero-3.JPG');"></div>
+    <div class="hero-slide" style="background-image: url('img/hero-4.jpg');"></div>
+    <div class="hero-slide" style="background-image: url('img/hero-5.jpg');"></div>
+    <div class="hero-content">
+      <h1 class="couple-names">Tere & Oskar</h1>
+      <p>¡Nos casamos!</p>
+      <p>Ens casem!</p>
+      <p>Ezkonduko gara!</p>
+    </div>
+    <div class="hero-controls">
+      <button onclick="prevSlide()" aria-label="Foto anterior">❮</button>
+      <button onclick="nextSlide()" aria-label="Foto siguiente">❯</button>
+    </div>
+    <div class="dots" role="tablist" aria-label="Selector de diapositiva">
+      <button class="dot active" onclick="goToSlide(0)" role="tab" aria-selected="true" aria-label="Diapositiva 1"></button>
+      <button class="dot" onclick="goToSlide(1)" role="tab" aria-selected="false" aria-label="Diapositiva 2"></button>
+      <button class="dot" onclick="goToSlide(2)" role="tab" aria-selected="false" aria-label="Diapositiva 3"></button>
+      <button class="dot" onclick="goToSlide(3)" role="tab" aria-selected="false" aria-label="Diapositiva 4"></button>
+      <button class="dot" onclick="goToSlide(4)" role="tab" aria-selected="false" aria-label="Diapositiva 5"></button>
+    </div>
+  </section>
+
+  <section class="section countdown-section" id="contador">
+  <h2 class="section-title">Cuenta atrás</h2>
+  <div class="countdown-box">
+    <div class="countdown-item"><span id="dias">00</span><small>días</small></div>
+    <div class="countdown-item"><span id="horas">00</span><small>horas</small></div>
+    <div class="countdown-item"><span id="minutos">00</span><small>min</small></div>
+    <div class="countdown-item"><span id="segundos">00</span><small>seg</small></div>
+  </div>
+</section>
+
+  <section class="section" id="historia">
+  <h2 class="section-title">Nuestra Historia</h2>
+  <div class="vertical-timeline">
+    <div class="vtimeline-line"></div>
+
+    <div class="vtimeline-item left">
+      <div class="vtimeline-img">
+        <img src="img/historia-encuentro.jpeg" alt="Foto del primer encuentro" />
+      </div>
+      <div class="vtimeline-content">
+        <div class="vtimeline-date">Diciembre 2024</div>
+        <h3>Primer Encuentro</h3>
+        <p>Franja de tiempo en que se estableció un mutuo acuerdo de ambas partes involucradas para llevar a cabo el proyecto web.</p>
+        <p>Primeros bozetos y conceptos prematuros de elementos visuales e ideas de diseño para la implementación fueron realizados.</p>
+      </div>
     </div>
 
-    <script>
-        // Configuració global dels gràfics
-        Chart.defaults.font.family = 'Segoe UI';
-        Chart.defaults.plugins.legend.display = true;
-        
-        // Gràfic circular - Distribució per tipus
-        const pieCtx = document.getElementById('pieChart').getContext('2d');
-        const pieChart = new Chart(pieCtx, {
-            type: 'doughnut',
-            data: {
-                labels: ['Hotels', 'Cases Rurals', 'Apartaments Turístics', 'Càmpings', 'Hostals', 'Altres'],
-                datasets: [{
-                    data: [45, 28, 18, 5, 3, 1],
-                    backgroundColor: [
-                        '#6C91C2',
-                        '#6CBF84',
-                        '#F4A460',
-                        '#DA70D6',
-                        '#FF6347',
-                        '#40E0D0'
-                    ],
-                    borderWidth: 3,
-                    borderColor: '#fff'
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'right',
-                        labels: {
-                            padding: 20,
-                            font: {
-                                size: 12
-                            }
-                        }
-                    },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                return context.label + ': ' + context.parsed + '%';
-                            }
-                        }
-                    }
-                },
-                animation: {
-                    animateScale: true,
-                    duration: 2000
-                }
-            }
-        });
-        
-        // Gràfic lineal - Evolució temporal
-        const lineCtx = document.getElementById('lineChart').getContext('2d');
-        const lineChart = new Chart(lineCtx, {
-            type: 'line',
-            data: {
-                labels: ['Q1 2019', 'Q2 2019', 'Q3 2019', 'Q4 2019', 'Q1 2020', 'Q2 2020', 'Q3 2020', 'Q4 2020', 'Q1 2021', 'Q2 2021', 'Q3 2021', 'Q4 2021', 'Q1 2022', 'Q2 2022', 'Q3 2022', 'Q4 2022', 'Q1 2023', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024'],
-                datasets: [{
-                    label: 'Noves obertures',
-                    data: [85, 120, 95, 70, 45, 15, 25, 40, 55, 80, 90, 85, 110, 145, 125, 100, 150, 185, 160, 130, 165],
-                    borderColor: '#6C91C2',
-                    backgroundColor: 'rgba(108, 145, 194, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#6C91C2',
-                    pointBorderColor: '#fff',
-                    pointBorderWidth: 2,
-                    pointRadius: 5
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0,0,0,0.1)'
-                        },
-                        ticks: {
-                            font: {
-                                size: 11
-                            }
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            font: {
-                                size: 11
-                            },
-                            maxRotation: 45
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                animation: {
-                    duration: 2000,
-                    easing: 'easeInOutQuart'
-                }
-            }
-        });
-        
-        // Gràfic de barres - Distribució geogràfica
-        const barCtx = document.getElementById('barChart').getContext('2d');
-        const barChart = new Chart(barCtx, {
-            type: 'bar',
-            data: {
-                labels: ['Barcelonès', 'Selva', 'Alt Empordà', 'Garraf', 'Maresme', 'Baix Llobregat', 'Tarragonès', 'Alt Penedès'],
-                datasets: [{
-                    label: 'Places d\'allotjament',
-                    data: [45000, 18500, 12800, 8900, 7200, 6800, 5900, 4200],
-                    backgroundColor: [
-                        '#6C91C2',
-                        '#6CBF84',
-                        '#F4A460',
-                        '#DA70D6',
-                        '#FF6347',
-                        '#40E0D0',
-                        '#FFD700',
-                        '#98FB98'
-                    ],
-                    borderRadius: 5,
-                    borderSkipped: false
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: 'rgba(0,0,0,0.1)'
-                        },
-                        ticks: {
-                            callback: function(value) {
-                                return value.toLocaleString();
-                            }
-                        }
-                    },
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            maxRotation: 45
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                animation: {
-                    duration: 1500,
-                    delay: (context) => context.dataIndex * 100
-                }
-            }
-        });
-        
-        // Gràfic radar - Ocupació estacional
-        const radarCtx = document.getElementById('radarChart').getContext('2d');
-        const radarChart = new Chart(radarCtx, {
-            type: 'radar',
-            data: {
-                labels: ['Gener', 'Febrer', 'Març', 'Abril', 'Maig', 'Juny', 'Juliol', 'Agost', 'Setembre', 'Octubre', 'Novembre', 'Desembre'],
-                datasets: [{
-                    label: 'Hotels',
-                    data: [45, 50, 65, 75, 80, 90, 95, 98, 85, 70, 55, 48],
-                    borderColor: '#6C91C2',
-                    backgroundColor: 'rgba(108, 145, 194, 0.2)',
-                    borderWidth: 2
-                }, {
-                    label: 'Apartaments',
-                    data: [60, 62, 68, 72, 78, 85, 88, 90, 85, 75, 68, 65],
-                    borderColor: '#6CBF84',
-                    backgroundColor: 'rgba(108, 191, 132, 0.2)',
-                    borderWidth: 2
-                }, {
-                    label: 'Cases Rurals',
-                    data: [70, 65, 60, 55, 50, 45, 40, 42, 55, 75, 80, 78],
-                    borderColor: '#F4A460',
-                    backgroundColor: 'rgba(244, 164, 96, 0.2)',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                scales: {
-                    r: {
-                        beginAtZero: true,
-                        max: 100,
-                        grid: {
-                            color: 'rgba(0,0,0,0.1)'
-                        },
-                        angleLines: {
-                            color: 'rgba(0,0,0,0.1)'
-                        },
-                        ticks: {
-                            stepSize: 20
-                        }
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'bottom'
-                    }
-                },
-                animation: {
-                    duration: 2000
-                }
-            }
-        });
-        
-        // Funcions interactives
-        function toggleData() {
-            // Simula canvi de vista
-            alert('En Flourish, aquesta funcionalitat et permet alternar entre diferents conjunts de dades o períodes temporals!');
-        }
-        
-        function animateCharts() {
-            // Reanima els gràfics
-            pieChart.update('none');
-            lineChart.update('none');
-            barChart.update('none');
-            radarChart.update('none');
-            
-            setTimeout(() => {
-                pieChart.update('default');
-                lineChart.update('default');
-                barChart.update('default');
-                radarChart.update('default');
-            }, 100);
-        }
-        
-        function showFilters() {
-            alert('En Flourish pots afegir filtres interactius per comarca, tipus d\'establiment, període temporal, etc.');
-        }
-        
-        // Animació inicial dels gràfics
-        window.addEventListener('load', function() {
-            setTimeout(animateCharts, 500);
-        });
-    </script>
+    <div class="vtimeline-item right">
+      <div class="vtimeline-img">
+        <img src="img/historia-propuesta.jpg" alt="Foto de la propuesta de matrimonio" />
+      </div>
+      <div class="vtimeline-content">
+        <div class="vtimeline-date">Enero 2025</div>
+        <h3>La Propuesta</h3>
+        <p>Los días pasaban y era preciso encontrar una motivación.</p>
+        <p>Como la motivación es un cuento chino, optamos por el compromiso.</p> 
+        <p>Fue una noche mágica de invierno, con luces, anillo y lágrimas felices. Dijimos sí.</p>
+        <p>Íbamos a desarrollar una aplicación competente sin importar el coste.</p>
+      </div>
+    </div>
+
+    <div class="vtimeline-item left">
+      <div class="vtimeline-img">
+        <img src="img/historia-boda.jpg" alt="Foto del día de la boda" />
+      </div>
+      <div class="vtimeline-content">
+        <div class="vtimeline-date">Febrero 2025</div>
+        <h3>Los Problemas</h3>
+        <p>El gran día llegó. Rodeados de amor, familia y amigos, nos unimos para siempre.</p>
+        <p>Muy unidos pero sin web todavía. Así que tuvimos que retrasar su publicación.</p>
+        <p>Resolver problemas que no esperábamos resultó no ser más complicado de lo esperado</p>
+        <p>precisamente porque no lo esperábamos, pero sí que fue bastante complicado a secas.</p>
+      </div>
+    </div>
+
+    <div class="vtimeline-item right">
+      <div class="vtimeline-img">
+        <img src="img/historia-bodaa.jpg" alt="Foto del día de la boda" />
+      </div>
+      <div class="vtimeline-content">
+        <div class="vtimeline-date">Marzo 2025</div>
+        <h3>Las Soluciones</h3>
+        <p>Parecíamos haber encontrado una manera de que todo funcionara perfectamente.</p>
+        <p>¡Que alivio cuándo contemplamos su grandeza y simplicidad!</p>
+        <p>¿Una galería flotante? ¿Animaciones de gradiente y sombreado? ¿Modelo responsive?</p>
+        <p>Demasiado bueno para ser cierto, ¿verdad? Pues no. Es cierto y bueno por igual.</p>
+        <p>Pero hay que empezar desde cero.</p>
+      </div>
+    </div>
+
+    <div class="vtimeline-item left">
+      <div class="vtimeline-img">
+        <img src="img/historia-bodaaa.jpg" alt="Foto del día de la boda" />
+      </div>
+      <div class="vtimeline-content">
+        <div class="vtimeline-date">Abril 2025</div>
+        <h3>El retraso</h3>
+        <p>Una cosa surrealista tuvo lugar.</p>
+        <p>Unos espías de SpaceX robaron el servidor físico donde se alojaba nuestro preciado proyecto web.</p>
+        <p>Nos costó cerca de dos semanas hinchar el globo a pleno pulmón pero al fin lo conseguimos y alzamos a volar.</p>
+        <p>En esta foto estábamos muy felices pues conseguimos aterrizar con éxito después de casi dos meses de persecución.</p>
+        <p>Con el servidor ya en nuestras manos, nada podía salir mal: todo el mundo podrá disfrutar la web.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+  <section class="section" id="informacion">
+    <h2 class="section-title">Información del Enlace</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h3>Información clave</h3>
+        <div class="lang-es">
+          <p>Detalles de nuestro enlace y celebración</p>
+        </div>
+        <div class="lang-cat">
+          <p>Detalls del nostre enllaç i celebració</p>
+        </div>
+        <div class="lang-es">
+          <p><strong>Sábado, 31 de mayo de 2025 a las 18:00h</strong></p>
+        </div>
+        <div class="lang-cat">
+          <p><strong>Dissabte, 31 de maig de 2025 a les 18:00h</strong></p>
+        </div>
+        <p><strong>Masia Miravall s/n, Juneda (25430), Les Garrigues – Lleida</strong></p>
+        <div class="lang-es">
+          <p>✔ Sí disponemos de parking en el mismo recinto</p>
+        </div>
+        <div class="lang-cat">
+          <p>✔ Sí disposem de parking al mateix recinte</p>
+        </div>
+        <div class="lang-es">
+          <p><strong>¡Confirmadnos la asistencia si aún no lo habéis hecho 😊, por favor!</strong></p>
+        </div>
+        <div class="lang-cat">
+          <p><strong>Confirmeu-nos l'assistència si encara no ho heu fet 😊!</strong></p>
+        </div>
+        <div class="lang-es">
+          <p><strong>Ruta recomendada:</strong></p>
+        </div>
+        <div class="lang-cat">
+          <p><strong>Ruta recomanada:</strong></p>
+        </div>
+        <ul>
+          <li>➡️ AP2 desde Vitoria-Logroño-Zaragoza hasta salida Les Borges Blanques - Juneda – Castelldans</li>
+          <li>⬅️ AP2 desde El Vendrell-Tarragona-Barcelona hasta salida Les Borges Blanques - Juneda – Castelldans</li>
+        </ul>
+        <div class="lang-es">
+          <p>Todo el trayecto es asfalto hasta llegar a las Bodegas Torres de El Purgatori, a partir de ahí camino de tierra a mano derecha hasta Masia Miravall</p>
+        </div>
+        <div class="lang-cat">
+          <p>Tot el trajecte és asfalt fins arribar a les Bodegues Torres d'El Purgatori, a partir d'aquí camí de terra a mà dreta fins a Masia Miravall.</p>
+        </div>
+        <div class="lang-es">
+          <p><strong>¡Mucho cuidado y atención al regresar tras la fiesta!</strong></p>
+        </div>
+        <div class="lang-cat">
+          <p><strong>Molta cura i atenció al tornar després de la festa!</strong></p>
+        </div>
+        <div class="lang-es">
+          <p>No seguir indicaciones de Waze o Google Maps que os manden por Juneda. Es camino estrecho y peligroso.</p>
+        </div>
+        <div class="lang-cat">
+          <p>No feu cas de les indicacions de Waze o Google Maps si us indiquen passar per Juneda. És un camí estret i perillós.</p>
+        </div>
+        <div class="info-key-media">
+          <img src="img/mapa-acceso-1.png" alt="Mapa de acceso estilizado" class="info-media" />
+          <img src="img/mapa-acceso-2.png" alt="Ruta recomendada desde autopista" class="info-media" />
+          <iframe class="info-media" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3030.7837826833613!2d0.775!3d41.497!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sEspai%20Miravall!5e0!3m2!1ses!2ses!4v0000000000000" allowfullscreen="" loading="lazy" title="Mapa Miravall"></iframe>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <h3>Menú y alergias</h3>
+        <div class="lang-es">
+          <p>Haznos llegar tu selección y alérgenos si aún no lo has hecho</p>
+        </div>
+        <div class="lang-cat">
+          <p>Fes-nos arribar la teva selecció i al·lèrgens si encara no ho has fet</p>
+        </div>
+        <ul>
+          <li class="lang-es">¿Qué te apetece más como segundo plato: carne o pescado?</li>
+          <li class="lang-cat">Què prefereixes com a segon: carn o peix?</li>
+          <li class="lang-es">¿Tienes alguna intolerancia o alergia alimentaria?</li>
+          <li class="lang-cat">Tens alguna intolerància o al·lèrgia alimentària?</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <h3>Participa en la fiesta</h3>
+        <div class="lang-es">
+          <p><strong>Antes del evento:</strong> Propón una canción para el baile</p>
+        </div>
+        <div class="lang-cat">
+          <p><strong>Abans de l'esdeveniment:</strong> Proposa una cançó pel ball.</p>
+        </div>
+        <div class="lang-es">
+          <p><strong>Durante el evento:</strong> Compartid vuestras fotos y vídeos en:</p>
+        </div>
+        <div class="lang-cat">
+          <p><strong>Durant l'esdeveniment:</strong> Compartiu les vostres fotos i vídeos a:</p>
+        </div>
+        <ul>
+          <li><a href="https://drive.google.com/drive/folders/1FJ5u2Qkw0-jYXA9d4l8rEEV_X6VS1Lxu?usp=drive_link" target="_blank" class="drive-link">Álbum en Google Drive</a></li>          
+          <li class="lang-es">O en la app "WedShoots" usando el QR que encontraréis en la boda</li>
+          <li class="lang-cat">O a través de l'app "WedShoots" amb el QR que trobareu al casament</li>
+        </ul>        
+        <div class="qr-container">
+          <img src="img/qr-wedshoots.png" alt="QR de WedShoots" class="info-qr" />
+        </div>
+
+      </div>
+      <div class="timeline-item">
+        <h3>Alojamiento</h3>
+        <ul>
+          <li class="lang-es">Alojamiento + desayuno</li>
+          <li class="lang-cat">Allotjament + esmorzar</li>
+          <li class="lang-es">Comida (arroz o fideuá)</li>
+          <li class="lang-cat">Dinar (arròs o fideuà)</li>
+        </ul>
+        <div class="lang-es">
+          <p><strong>¡Avisad a los novios para reservar!</strong></p>
+        </div>
+        <div class="lang-cat">
+          <p><strong>Aviseu els nuvis per reservar!</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="comentarios">
+    <h2 class="section-title">Tus Palabras</h2>
+    <form class="comment-form" id="comment-form">
+      <input type="text" id="comment-name" placeholder="Tu nombre" required maxlength="32">
+      <textarea id="comment-text" placeholder="Escribe tu comentario..." required maxlength="340"></textarea>
+      <button type="submit">Comentar</button>
+    </form>
+    <div id="comments-list"></div>
+  </section>
+
+  <footer id="contacto">
+    <p>Contacto: +34 656 85 61 39</p>
+    <p>Correo: oskarcommunication@gmail.com</p>
+    <p>Instagram: @anskari2013</p>
+    <div class="lang-es">
+      <p>Para cualquier duda sobre este blog o el día del evento podéis contactar con los novios vía tel, email o whatsapp</p>
+    </div>
+    <div class="lang-cat">
+      <p>Per qualsevol dubte sobre aquest bloc o el dia de l'esdeveniment podeu contactar amb els nuvis via tel., email o whatsapp</p>
+    </div>
+  </footer>
+
+  <script src="main.js"></script>
 </body>
 </html>
