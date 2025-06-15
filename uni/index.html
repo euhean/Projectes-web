@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="ca">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esquemes de Xarxa - Base Marciana</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .diagram {
+            margin-bottom: 50px;
+        }
+        
+        h2 {
+            color: #2c5aa0;
+            font-size: 24px;
+            margin-bottom: 30px;
+            text-decoration: underline;
+        }
+        
+        .logical-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-height: 800px;
+        }
+        
+        .physical-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            min-height: 600px;
+        }
+        
+        /* Switches */
+        .switch {
+            width: 80px;
+            height: 40px;
+            background: #4A90E2;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 12px;
+            position: relative;
+            margin: 20px;
+        }
+        
+        .core-switch {
+            background: #2c5aa0;
+            width: 100px;
+            height: 50px;
+            font-size: 14px;
+        }
+        
+        /* VLANs/Devices */
+        .vlan {
+            width: 120px;
+            height: 40px;
+            background: #e8f4f8;
+            border: 2px solid #4A90E2;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin: 8px;
+            position: relative;
+        }
+        
+        /* Physical modules */
+        .module {
+            border: 2px solid #333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px;
+            background: white;
+            min-width: 200px;
+            position: relative;
+        }
+        
+        .module-title {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+            background: #f0f0f0;
+            padding: 8px;
+            border-radius: 5px;
+        }
+        
+        .rack {
+            background: #ff4444;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            margin: 5px 0;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        /* Connections */
+        .connection {
+            position: absolute;
+            background: #666;
+            z-index: 1;
+        }
+        
+        .connection-horizontal {
+            height: 2px;
+        }
+        
+        .connection-vertical {
+            width: 2px;
+        }
+        
+        /* Grid for logical diagram */
+        .switch-layer {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            margin: 40px 0;
+        }
+        
+        .vlan-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 15px;
+            margin: 30px 0;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .legend {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Esquema Lògic -->
+        <div class="diagram">
+            <h2>2.2 Esquema lògic</h2>
+            <div class="logical-diagram">
+                <!-- Core Switch -->
+                <div class="switch core-switch">CORE</div>
+                
+                <!-- Distribution Layer -->
+                <div class="switch-layer">
+                    <div class="switch">A0</div>
+                    <div class="switch">A1</div>
+                    <div class="switch">B1</div>
+                    <div class="switch">C1</div>
+                    <div class="switch">D1</div>
+                </div>
+                
+                <!-- VLANs/Departaments -->
+                <div class="vlan-grid">
+                    <div class="vlan">VLAN 1<br>Gestió Xarxa</div>
+                    <div class="vlan">VLAN 2<br>Suport Vital</div>
+                    <div class="vlan">VLAN 3<br>Astrofísica</div>
+                    <div class="vlan">VLAN 4<br>Astronàutica</div>
+                    <div class="vlan">VLAN 5<br>Robopsicologia</div>
+                    <div class="vlan">VLAN 6<br>Comandament</div>
+                    <div class="vlan">VLAN 7<br>Exobiologia</div>
+                    <div class="vlan">VLAN 8<br>WiFi/Seguretat</div>
+                    <div class="vlan">VLAN 9<br>Fibra Òptica</div>
+                    <div class="vlan">VLAN 10<br>PLC</div>
+                    <div class="vlan">VLAN 11<br>Seguretat</div>
+                    <div class="vlan">VLAN 12<br>Sensorització</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Esquema Físic -->
+        <div class="diagram">
+            <h2>2.3 Esquema físic</h2>
+            <div class="physical-diagram">
+                <!-- Mòdul Central -->
+                <div class="module">
+                    <div class="module-title">MÒDUL CENTRAL</div>
+                    <div class="rack">RACK A0 - CRISTIAN</div>
+                    <div style="font-size: 11px; margin: 8px 0;">
+                        <strong>Switch:</strong> OS-7800<br>
+                        <strong>Ports:</strong> 10<br>
+                        <strong>Funcions:</strong> Core, Gestió, Suport Vital
+                    </div>
+                </div>
+
+                <!-- Mòdul A -->
+                <div class="module">
+                    <div class="module-title">MÒDUL A</div>
+                    <div class="rack">RACK A1 - EUDALD</div>
+                    <div style="font-size: 11px; margin: 8px 0;">
+                        <strong>Switch:</strong> OS-6602<br>
+                        <strong>Ports:</strong> 12<br>
+                        <strong>Depts:</strong> Astrofísica, Astronàutica, Robopsicologia, Comandament, Exobiologia
+                    </div>
+                </div>
+
+                <!-- Mòdul B -->
+                <div class="module">
+                    <div class="module-title">MÒDUL B</div>
+                    <div class="rack">RACK B1 - EUDALD</div>
+                    <div style="font-size: 11px; margin: 8px 0;">
+                        <strong>Switch:</strong> OS-6602<br>
+                        <strong>Ports:</strong> 7<br>
+                        <strong>Depts:</strong> Tots els departaments (distribució)
+                    </div>
+                </div>
+
+                <!-- Mòdul C -->
+                <div class="module">
+                    <div class="module-title">MÒDUL C</div>
+                    <div class="rack">RACK C1 - ISMAEL</div>
+                    <div style="font-size: 11px; margin: 8px 0;">
+                        <strong>Switch:</strong> OS-6250<br>
+                        <strong>Ports:</strong> 11<br>
+                        <strong>Depts:</strong> Astrofísica, Astronàutica, Comandament, Exobiologia, PLC
+                    </div>
+                </div>
+
+                <!-- Mòdul D -->
+                <div class="module">
+                    <div class="module-title">MÒDUL D</div>
+                    <div class="rack">RACK D1 - ISMAEL</div>
+                    <div style="font-size: 11px; margin: 8px 0;">
+                        <strong>Switch:</strong> OS-6602<br>
+                        <strong>Ports:</strong> 5<br>
+                        <strong>Depts:</strong> Astrofísica, Astronàutica, Exobiologia, Seguretat
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; font-style: italic; margin-top: 20px; color: #666;">
+                Il·lustració 2 - Esquema físic
+            </div>
+        </div>
+
+        <!-- Llegenda -->
+        <div class="legend">
+            <h3>Informació addicional:</h3>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #2c5aa0;"></div>
+                <span>Switch Core (A0) - Encaminament L3 i gestió central</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4A90E2;"></div>
+                <span>Switches de distribució (A1, B1, C1, D1) - Accés departamental</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #ff4444;"></div>
+                <span>Racks físics distribuïts per mòduls de la base</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #e8f4f8; border: 1px solid #4A90E2;"></div>
+                <span>VLANs departamentals amb separació lògica</span>
+            </div>
+        </div>
+
+        <!-- Taula de subnetting -->
+        <div style="margin-top: 40px;">
+            <h3>Resum de subnetting:</h3>
+            <table style="width: 100%; border-collapse: collapse; font-size: 12px;">
+                <thead>
+                    <tr style="background: #f0f0f0;">
+                        <th style="border: 1px solid #ddd; padding: 8px;">Departament</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">VLAN</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Xarxa</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Broadcast</th>
+                        <th style="border: 1px solid #ddd; padding: 8px;">Màscara</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="border: 1px solid #ddd; padding: 8px;">Exobiologia</td><td style="border: 1px solid #ddd; padding: 8px;">7</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.128/27</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.159</td><td style="border: 1px solid #ddd; padding: 8px;">255.255.255.224</td></tr>
+                    <tr><td style="border: 1px solid #ddd; padding: 8px;">Astrofísica</td><td style="border: 1px solid #ddd; padding: 8px;">3</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.0/26</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.63</td><td style="border: 1px solid #ddd; padding: 8px;">255.255.255.192</td></tr>
+                    <tr><td style="border: 1px solid #ddd; padding: 8px;">Astronàutica</td><td style="border: 1px solid #ddd; padding: 8px;">4</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.64/26</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.127</td><td style="border: 1px solid #ddd; padding: 8px;">255.255.255.192</td></tr>
+                    <tr><td style="border: 1px solid #ddd; padding: 8px;">Robopsicologia</td><td style="border: 1px solid #ddd; padding: 8px;">5</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.160/27</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.191</td><td style="border: 1px solid #ddd; padding: 8px;">255.255.255.224</td></tr>
+                    <tr><td style="border: 1px solid #ddd; padding: 8px;">Comandament</td><td style="border: 1px solid #ddd; padding: 8px;">6</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.192/27</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.223</td><td style="border: 1px solid #ddd; padding: 8px;">255.255.255.224</td></tr>
+                    <tr><td style="border: 1px solid #ddd; padding: 8px;">PLC</td><td style="border: 1px solid #ddd; padding: 8px;">10</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.224/28</td><td style="border: 1px solid #ddd; padding: 8px;">13.13.64.239</td><td style="border: 1px solid #ddd; padding: 8px;">255.255.255.240</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
