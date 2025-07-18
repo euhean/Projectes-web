@@ -3,121 +3,836 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Roda de l'Aprenentatge</title>
-  <!-- Font Awesome per icones -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-ku5G+X4OeKRO7iZK+KgK7V+QTWv+Ej/RQxOPF6+Gu9tzF3xuRql7G9Z8V6x6tIBRMN/RZgWTPTbN6YCaF4g3rQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <title>La Roda de l'Aprenentatge - Cyberpunk Edition</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
+    
     :root {
-      --soft-blue: #A8DADC;
-      --soft-green: #F1FAEE;
-      --soft-pink: #FFE5D9;
-      --soft-yellow: #FFDDD2;
-      --accent: #E63946;
-      --text: #1D3557;
+      --neon-blue: #00ffff;
+      --neon-pink: #ff0080;
+      --neon-green: #00ff00;
+      --neon-purple: #8000ff;
+      --neon-yellow: #ffff00;
+      --dark-bg: #0a0a0a;
+      --darker-bg: #050505;
+      --text-light: #ffffff;
+      --glow-intensity: 0 0 20px;
     }
-    body {
+
+    * {
       margin: 0;
-      font-family: sans-serif;
-      background: var(--soft-green);
-      color: var(--text);
-      overflow: hidden;
+      padding: 0;
+      box-sizing: border-box;
     }
-    .diagram {
+
+    body {
+      font-family: 'Orbitron', monospace;
+      background: radial-gradient(circle at 50% 50%, #1a0033 0%, var(--dark-bg) 100%);
+      color: var(--text-light);
+      overflow: hidden;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* Animated background particles */
+    .particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .particle {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: var(--neon-blue);
+      border-radius: 50%;
+      animation: float 20s infinite linear;
+      box-shadow: var(--glow-intensity) var(--neon-blue);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+
+    .container {
       position: relative;
       width: 100vw;
       height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
     }
+
+    .wheel {
+      position: relative;
+      width: 80vmin;
+      height: 80vmin;
+      max-width: 800px;
+      max-height: 800px;
+    }
+
+    .title {
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 2.5rem;
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-shadow: 0 0 30px var(--neon-blue);
+      animation: titleGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes titleGlow {
+      0% { filter: brightness(1); }
+      100% { filter: brightness(1.5); }
+    }
+
     .state {
       position: absolute;
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      background: var(--soft-blue);
+      background: var(--darker-bg);
+      border: 3px solid var(--neon-blue);
       display: flex;
       align-items: center;
       justify-content: center;
       flex-direction: column;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      z-index: 10;
+      box-shadow: 
+        var(--glow-intensity) var(--neon-blue),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
     }
-    .state.active {
-      background: var(--accent);
+
+    .state:hover {
       transform: scale(1.1);
+      border-color: var(--neon-pink);
+      box-shadow: 
+        var(--glow-intensity) var(--neon-pink),
+        0 0 40px var(--neon-pink),
+        inset 0 0 20px rgba(255, 0, 128, 0.2);
     }
+
+    .state.active {
+      border-color: var(--neon-green);
+      box-shadow: 
+        var(--glow-intensity) var(--neon-green),
+        0 0 40px var(--neon-green),
+        inset 0 0 20px rgba(0, 255, 0, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    .state.visited {
+      border-color: var(--neon-purple);
+      box-shadow: 
+        var(--glow-intensity) var(--neon-purple),
+        inset 0 0 20px rgba(128, 0, 255, 0.2);
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
     .state i {
       font-size: 2rem;
+      color: var(--neon-blue);
+      text-shadow: 0 0 10px currentColor;
+      transition: all 0.3s ease;
     }
+
+    .state:hover i {
+      color: var(--neon-pink);
+      transform: scale(1.2);
+    }
+
+    .state.active i {
+      color: var(--neon-green);
+    }
+
     .state span {
       margin-top: 0.5rem;
       font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-shadow: 0 0 5px currentColor;
     }
-    /* Posicions aproximades en cercle */
-    #T { top: 40%; left: 75%; }
-    #E { top: 55%; left: 65%; }
-    #S { top: 65%; left: 50%; }
-    #C { top: 55%; left: 35%; }
-    #P { top: 40%; left: 25%; }
-    #A { top: 25%; left: 35%; }
-    #PP { top: 15%; left: 50%; }
-    #D { top: 25%; left: 65%; }
-    /* SVG fletxes ocupant tot el contenidor */
-    svg.arrows {
+
+    /* State positions (circular arrangement) */
+    .state:nth-child(1) { top: 10%; left: 50%; transform: translateX(-50%); } /* PP */
+    .state:nth-child(2) { top: 25%; left: 75%; transform: translateX(-50%); } /* D */
+    .state:nth-child(3) { top: 50%; left: 85%; transform: translateX(-50%); } /* T */
+    .state:nth-child(4) { top: 75%; left: 75%; transform: translateX(-50%); } /* E */
+    .state:nth-child(5) { top: 90%; left: 50%; transform: translateX(-50%); } /* S */
+    .state:nth-child(6) { top: 75%; left: 25%; transform: translateX(-50%); } /* C */
+    .state:nth-child(7) { top: 50%; left: 15%; transform: translateX(-50%); } /* P */
+    .state:nth-child(8) { top: 25%; left: 25%; transform: translateX(-50%); } /* A */
+
+    /* SVG connections */
+    .connections {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
       pointer-events: none;
+      z-index: 5;
     }
-    .arrow {
-      stroke: var(--soft-pink);
-      stroke-width: 4;
+
+    .connection {
+      stroke: var(--neon-blue);
+      stroke-width: 3;
       fill: none;
-      stroke-dasharray: 200;
-      stroke-dashoffset: 200;
-      animation: draw 1s forwards;
+      opacity: 0.6;
+      stroke-dasharray: 10, 5;
+      animation: dashMove 2s linear infinite;
+      filter: drop-shadow(0 0 5px var(--neon-blue));
     }
-    @keyframes draw {
-      to { stroke-dashoffset: 0; }
+
+    .connection.active {
+      stroke: var(--neon-green);
+      stroke-width: 4;
+      opacity: 1;
+      animation: dashMove 1s linear infinite, glow 2s ease-in-out infinite alternate;
+    }
+
+    @keyframes dashMove {
+      0% { stroke-dashoffset: 0; }
+      100% { stroke-dashoffset: 15; }
+    }
+
+    @keyframes glow {
+      0% { filter: drop-shadow(0 0 5px var(--neon-green)); }
+      100% { filter: drop-shadow(0 0 15px var(--neon-green)); }
+    }
+
+    /* Modal styles */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .modal-content {
+      background: var(--darker-bg);
+      border: 2px solid var(--neon-blue);
+      border-radius: 20px;
+      padding: 2rem;
+      max-width: 600px;
+      width: 90%;
+      max-height: 80vh;
+      overflow-y: auto;
+      position: relative;
+      box-shadow: 
+        var(--glow-intensity) var(--neon-blue),
+        inset 0 0 20px rgba(0, 255, 255, 0.1);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid var(--neon-blue);
+    }
+
+    .modal-header i {
+      font-size: 2.5rem;
+      color: var(--neon-green);
+      margin-right: 1rem;
+      text-shadow: 0 0 10px currentColor;
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--neon-green);
+      text-shadow: 0 0 10px currentColor;
+    }
+
+    .modal-body {
+      line-height: 1.6;
+      font-size: 1.1rem;
+    }
+
+    .modal-body h3 {
+      color: var(--neon-pink);
+      margin: 1.5rem 0 1rem 0;
+      text-shadow: 0 0 5px currentColor;
+    }
+
+    .modal-body p {
+      margin-bottom: 1rem;
+      color: var(--text-light);
+    }
+
+    .modal-body .highlight {
+      color: var(--neon-yellow);
+      font-weight: 700;
+      text-shadow: 0 0 5px currentColor;
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: none;
+      border: 2px solid var(--neon-pink);
+      color: var(--neon-pink);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 10px var(--neon-pink);
+    }
+
+    .close-btn:hover {
+      background: var(--neon-pink);
+      color: var(--dark-bg);
+      transform: scale(1.1);
+    }
+
+    .progress-bar {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 300px;
+      height: 10px;
+      background: var(--darker-bg);
+      border: 1px solid var(--neon-blue);
+      border-radius: 5px;
+      overflow: hidden;
+      z-index: 100;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      width: 0%;
+      transition: width 0.5s ease;
+      box-shadow: 0 0 10px var(--neon-blue);
+    }
+
+    .engineering-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background: var(--darker-bg);
+      border: 2px solid var(--neon-yellow);
+      color: var(--neon-yellow);
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Orbitron', monospace;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      z-index: 100;
+      box-shadow: 0 0 15px var(--neon-yellow);
+    }
+
+    .engineering-btn:hover {
+      background: var(--neon-yellow);
+      color: var(--dark-bg);
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.8); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+      .title {
+        font-size: 1.8rem;
+        top: -60px;
+      }
+      
+      .state {
+        width: 90px;
+        height: 90px;
+      }
+      
+      .state i {
+        font-size: 1.5rem;
+      }
+      
+      .state span {
+        font-size: 0.7rem;
+      }
+      
+      .modal-content {
+        padding: 1.5rem;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="diagram">
-    <!-- Estats -->
-    <div class="state" id="T"><i class="fas fa-briefcase"></i><span>Treballo</span></div>
-    <div class="state" id="E"><i class="fas fa-lightbulb"></i><span>Entenc</span></div>
-    <div class="state" id="S"><i class="fas fa-pencil-alt"></i><span>Soluciono</span></div>
-    <div class="state" id="C"><i class="fas fa-pen-fancy"></i><span>Corregixo</span></div>
-    <div class="state" id="P"><i class="fas fa-brain"></i><span>Penso</span></div>
-    <div class="state" id="A"><i class="fas fa-cogs"></i><span>Practico</span></div>
-    <div class="state" id="PP"><i class="fas fa-star"></i><span>Perfecciono</span></div>
-    <div class="state" id="D"><i class="fas fa-coffee"></i><span>Descanso</span></div>
+  <!-- Animated background particles -->
+  <div class="particles"></div>
 
-    <!-- Fletxes SVG -->
-    <svg class="arrows">
-      <!-- Des de T a E -->
-      <defs><marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-        <polygon points="0 0, 10 3.5, 0 7" />
-      </marker></defs>
-      <path class="arrow" marker-end="url(#arrowhead)" d="M80 200 C300 220, 350 300, 320 350" />
-      <!-- Afegeix més camins per a cada fletxa seguint el diagrama -->
-    </svg>
+  <div class="container">
+    <div class="wheel">
+      <div class="title">LA RODA DE L'APRENENTATGE</div>
+      
+      <!-- States arranged in a circle -->
+      <div class="state" data-state="PP">
+        <i class="fas fa-star"></i>
+        <span>Perfecciono</span>
+      </div>
+      
+      <div class="state" data-state="D">
+        <i class="fas fa-coffee"></i>
+        <span>Descanso</span>
+      </div>
+      
+      <div class="state" data-state="T">
+        <i class="fas fa-briefcase"></i>
+        <span>Treballo</span>
+      </div>
+      
+      <div class="state" data-state="E">
+        <i class="fas fa-lightbulb"></i>
+        <span>Entenc</span>
+      </div>
+      
+      <div class="state" data-state="S">
+        <i class="fas fa-pencil-alt"></i>
+        <span>Soluciono</span>
+      </div>
+      
+      <div class="state" data-state="C">
+        <i class="fas fa-pen-fancy"></i>
+        <span>Corregeixo</span>
+      </div>
+      
+      <div class="state" data-state="P">
+        <i class="fas fa-brain"></i>
+        <span>Penso</span>
+      </div>
+      
+      <div class="state" data-state="A">
+        <i class="fas fa-cogs"></i>
+        <span>Practico</span>
+      </div>
+
+      <!-- SVG connections -->
+      <svg class="connections" viewBox="0 0 100 100">
+        <!-- Connections between states -->
+        <path class="connection" d="M 50 10 Q 75 25 75 50" />
+        <path class="connection" d="M 75 50 Q 75 75 50 90" />
+        <path class="connection" d="M 50 90 Q 25 75 25 50" />
+        <path class="connection" d="M 25 50 Q 25 25 50 10" />
+        <!-- Inner connections -->
+        <path class="connection" d="M 50 10 Q 65 35 85 50" />
+        <path class="connection" d="M 85 50 Q 65 65 50 90" />
+        <path class="connection" d="M 50 90 Q 35 65 15 50" />
+        <path class="connection" d="M 15 50 Q 35 35 50 10" />
+      </svg>
+    </div>
   </div>
+
+  <!-- Progress bar -->
+  <div class="progress-bar">
+    <div class="progress-fill"></div>
+  </div>
+
+  <!-- Engineering button -->
+  <button class="engineering-btn" onclick="showEngineeringModal()">
+    <i class="fas fa-robot"></i> HOW I BUILT THIS
+  </button>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">&times;</button>
+      <div class="modal-header">
+        <i class="fas fa-star"></i>
+        <h2 class="modal-title">State Title</h2>
+      </div>
+      <div class="modal-body">
+        <p>Modal content will be loaded here...</p>
+      </div>
+    </div>
+  </div>
+
   <script>
-    // Sequència d'animació dels estats
-    const order = ['T','E','S','C','P','A','PP','D'];
-    let idx = 0;
-    function highlight() {
-      const prev = document.querySelector('.state.active');
-      if(prev) prev.classList.remove('active');
-      const id = order[idx % order.length];
-      document.getElementById(id).classList.add('active');
-      idx++;
+    // State data with advice for each learning phase
+    const stateData = {
+      PP: {
+        title: "PERFECCIONO",
+        icon: "fas fa-star",
+        advice: "The final boss level of learning! 🌟",
+        content: `
+          <h3>You've reached the endgame!</h3>
+          <p>This is where good becomes <span class="highlight">legendary</span>. You're not just solving problems anymore - you're creating solutions that others will admire.</p>
+          
+          <h3>Pro Tips:</h3>
+          <p>• <span class="highlight">Teach others</span> - If you can explain it simply, you truly understand it</p>
+          <p>• <span class="highlight">Find edge cases</span> - What breaks your solution? That's where growth happens</p>
+          <p>• <span class="highlight">Optimize ruthlessly</span> - Can you do it faster? Cleaner? More elegantly?</p>
+          
+          <h3>Real Talk:</h3>
+          <p>Perfection isn't about being flawless - it's about <span class="highlight">continuous improvement</span>. Every expert was once a beginner who never gave up.</p>
+        `
+      },
+      D: {
+        title: "DESCANSO",
+        icon: "fas fa-coffee",
+        advice: "Your brain needs to process all that epic knowledge! ☕",
+        content: `
+          <h3>Rest is NOT wasted time!</h3>
+          <p>This is where the magic happens. Your brain is like a <span class="highlight">background process</span> - it keeps working even when you're not actively thinking about the problem.</p>
+          
+          <h3>Science-backed rest strategies:</h3>
+          <p>• <span class="highlight">Sleep on it</span> - Literally. Your brain consolidates memories during sleep</p>
+          <p>• <span class="highlight">Take walks</span> - Movement boosts creativity and problem-solving</p>
+          <p>• <span class="highlight">Do something completely different</span> - Let your subconscious work</p>
+          
+          <h3>Fun fact:</h3>
+          <p>Many breakthrough discoveries happened during rest periods. <span class="highlight">Archimedes</span> figured out displacement in a bath, and <span class="highlight">Newton</span> understood gravity while relaxing under a tree!</p>
+        `
+      },
+      T: {
+        title: "TREBALLO",
+        icon: "fas fa-briefcase",
+        advice: "Time to get your hands dirty! The grind is real but smart work beats hard work 💪",
+        content: `
+          <h3>Welcome to the arena!</h3>
+          <p>This is where dreams meet reality. You're not just learning anymore - you're <span class="highlight">doing</span>. And doing is where the real learning happens.</p>
+          
+          <h3>Work smart strategies:</h3>
+          <p>• <span class="highlight">Break it down</span> - Huge problems become manageable when split into smaller pieces</p>
+          <p>• <span class="highlight">Use the right tools</span> - A good developer knows their IDE shortcuts</p>
+          <p>• <span class="highlight">Time-box your efforts</span> - Pomodoro technique isn't just hype, it works!</p>
+          
+          <h3>Mindset shift:</h3>
+          <p>Don't work harder, work <span class="highlight">smarter</span>. Every problem you solve here builds your problem-solving muscle for the next challenge.</p>
+        `
+      },
+      E: {
+        title: "ENTENC",
+        icon: "fas fa-lightbulb",
+        advice: "That 'aha!' moment when everything clicks! 💡",
+        content: `
+          <h3>The lightbulb moment!</h3>
+          <p>This is the <span class="highlight">dopamine hit</span> of learning. When confusion transforms into clarity, and suddenly everything makes sense.</p>
+          
+          <h3>How to unlock understanding:</h3>
+          <p>• <span class="highlight">Connect the dots</span> - How does this relate to what you already know?</p>
+          <p>• <span class="highlight">Ask "why"</span> - Don't just memorize, understand the reasoning</p>
+          <p>• <span class="highlight">Explain it in your own words</span> - Can you teach it to a friend?</p>
+          
+          <h3>Level up tip:</h3>
+          <p>True understanding isn't just knowing <span class="highlight">what</span> works, but understanding <span class="highlight">why</span> it works. That's the difference between a script kiddie and a real engineer!</p>
+        `
+      },
+      S: {
+        title: "SOLUCIONO",
+        icon: "fas fa-pencil-alt",
+        advice: "Problem-solving mode activated! You're like a detective now 🕵️",
+        content: `
+          <h3>Detective mode: ON</h3>
+          <p>Every problem is a puzzle waiting to be solved. You're not just finding answers - you're <span class="highlight">crafting solutions</span>.</p>
+          
+          <h3>Problem-solving superpowers:</h3>
+          <p>• <span class="highlight">Rubber duck debugging</span> - Explain your problem to an inanimate object</p>
+          <p>• <span class="highlight">Think backwards</span> - Start from the desired outcome and work backwards</p>
+          <p>• <span class="highlight">Embrace failure</span> - Every wrong answer eliminates one possibility</p>
+          
+          <h3>Pro mindset:</h3>
+          <p>The best engineers aren't those who never encounter problems - they're the ones who <span class="highlight">love solving them</span>. Every bug is a mystery, every error is a clue!</p>
+        `
+      },
+      C: {
+        title: "CORREGEIXO",
+        icon: "fas fa-pen-fancy",
+        advice: "Mistakes are just features in disguise! Time to debug like a boss 🐛",
+        content: `
+          <h3>Debugging is an art form!</h3>
+          <p>You're not fixing mistakes - you're <span class="highlight">refining excellence</span>. Every error teaches you something new about the system.</p>
+          
+          <h3>Debugging like a pro:</h3>
+          <p>• <span class="highlight">Read the error message</span> - It's usually telling you exactly what's wrong</p>
+          <p>• <span class="highlight">Isolate the problem</span> - Divide and conquer</p>
+          <p>• <span class="highlight">Check your assumptions</span> - What you "know" might be wrong</p>
+          
+          <h3>Growth mindset:</h3>
+          <p>Every bug you fix makes you stronger. The code that breaks you today will make you <span class="highlight">unbreakable</span> tomorrow. Embrace the struggle!</p>
+        `
+      },
+      P: {
+        title: "PENSO",
+        icon: "fas fa-brain",
+        advice: "Your brain is the ultimate computer! Time to overclock it 🧠",
+        content: `
+          <h3>Thinking is your superpower!</h3>
+          <p>This is where you step back and <span class="highlight">architect</span> your approach. You're not just reacting - you're strategizing.</p>
+          
+          <h3>Thinking techniques:</h3>
+          <p>• <span class="highlight">Mind mapping</span> - Visual thinking unlocks creativity</p>
+          <p>• <span class="highlight">What if scenarios</span> - Explore different possibilities</p>
+          <p>• <span class="highlight">Pattern recognition</span> - Have you seen this problem before?</p>
+          
+          <h3>Deep thought:</h3>
+          <p>The difference between a junior and senior developer isn't just experience - it's <span class="highlight">thinking depth</span>. Take time to think before you code!</p>
+        `
+      },
+      A: {
+        title: "PRACTICO",
+        icon: "fas fa-cogs",
+        advice: "Practice doesn't make perfect - it makes permanent! 🔧",
+        content: `
+          <h3>Repetition is the mother of skill!</h3>
+          <p>You're building <span class="highlight">muscle memory</span> for your brain. Every practice session makes the next one easier.</p>
+          
+          <h3>Practice strategies:</h3>
+          <p>• <span class="highlight">Deliberate practice</span> - Focus on your weak points</p>
+          <p>• <span class="highlight">Spaced repetition</span> - Review concepts at increasing intervals</p>
+          <p>• <span class="highlight">Teach someone else</span> - The best way to learn is to teach</p>
+          
+          <h3>Level up approach:</h3>
+          <p>Don't just practice until you get it right - practice until you <span class="highlight">can't get it wrong</span>. That's when it becomes second nature!</p>
+        `
+      }
+    };
+
+    // Animation and interaction logic
+    let currentState = 0;
+    let visitedStates = new Set();
+    const states = document.querySelectorAll('.state');
+    const stateOrder = ['PP', 'D', 'T', 'E', 'S', 'C', 'P', 'A'];
+    
+    // Initialize particles
+    function createParticles() {
+      const container = document.querySelector('.particles');
+      for (let i = 0; i < 50; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = Math.random() * 100 + '%';
+        particle.style.animationDelay = Math.random() * 20 + 's';
+        particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+        container.appendChild(particle);
+      }
     }
-    setInterval(highlight, 1500);
-    // Encén el primer immediatament
-    highlight();
+
+    // State animation cycle
+    function animateStates() {
+      states.forEach(state => state.classList.remove('active'));
+      
+      const currentStateElement = document.querySelector(`[data-state="${stateOrder[currentState]}"]`);
+      if (currentStateElement) {
+        currentStateElement.classList.add('active');
+        
+        // Update connections
+        const connections = document.querySelectorAll('.connection');
+        connections.forEach(conn => conn.classList.remove('active'));
+        if (connections[currentState]) {
+          connections[currentState].classList.add('active');
+        }
+      }
+      
+      currentState = (currentState + 1) % stateOrder.length;
+    }
+
+    // Modal functionality
+    function showModal(stateKey) {
+      const modal = document.getElementById('modal');
+      const data = stateData[stateKey];
+      
+      if (!data) return;
+      
+      // Mark as visited
+      visitedStates.add(stateKey);
+      updateProgress();
+      
+      // Update modal content
+      const modalTitle = modal.querySelector('.modal-title');
+      const modalIcon = modal.querySelector('.modal-header i');
+      const modalBody = modal.querySelector('.modal-body');
+      
+      modalTitle.textContent = data.title;
+      modalIcon.className = data.icon;
+      modalBody.innerHTML = data.content;
+      
+      // Show modal
+      modal.classList.add('show');
+      
+      // Mark state as visited
+      const stateElement = document.querySelector(`[data-state="${stateKey}"]`);
+      if (stateElement) {
+        stateElement.classList.add('visited');
+      }
+    }
+
+    function closeModal() {
+      const modal = document.getElementById('modal');
+      modal.classList.remove('show');
+    }
+
+    function updateProgress() {
+      const progress = (visitedStates.size / Object.keys(stateData).length) * 100;
+      const progressFill = document.querySelector('.progress-fill');
+      progressFill.style.width = progress + '%';
+    }
+
+    function showEngineeringModal() {
+      const modal = document.getElementById('modal');
+      const modalTitle = modal.querySelector('.modal-title');
+      const modalIcon = modal.querySelector('.modal-header i');
+      const modalBody = modal.querySelector('.modal-body');
+      
+      modalTitle.textContent = "HOW I BUILT THIS";
+      modalIcon.className = "fas fa-robot";
+      modalBody.innerHTML = `
+        <h3>Welcome to the Matrix! 🕶️</h3>
+        <p>This isn't just a pretty wheel - it's a <span class="highlight">finite state machine</span>! The same mathematical concept used in:</p>
+        
+        <h3>Real-world applications:</h3>
+        <p>• <span class="highlight">Compilers</span> - How code gets translated to machine language</p>
+        <p>• <span class="highlight">Game AI</span> - How NPCs decide what to do next</p>
+        <p>• <span class="highlight">Network protocols</span> - How the internet knows what to do with your data</p>
+        <p>• <span class="highlight">User interfaces</span> - How apps respond to your clicks</p>
+        
+        <h3>The engineering behind this:</h3>
+        <p>• <span class="highlight">CSS animations</span> for that cyberpunk glow</p>
+        <p>• <span class="highlight">SVG paths</span> for those sweet connection lines</p>
+        <p>• <span class="highlight">JavaScript state management</span> for tracking your progress</p>
+        <p>• <span class="highlight">Responsive design</span> so it works on your phone</p>
+        
+        <h3>Why this matters:</h3>
+        <p>Learning itself is a <span class="highlight">state machine</span>! You transition between states based on inputs (new information, practice, rest). Understanding this makes you a more efficient learner.</p>
+        
+        <h3>The secret sauce:</h3>
+        <p>• <span class="highlight">Each state has a purpose</span> - No step is wasted</p>
+        <p>• <span class="highlight">Transitions matter</span> - How you move between states affects learning</p>
+        <p>• <span class="highlight">Feedback loops</span> - The system learns about itself</p>
+        
+        <h3>Your challenge:</h3>
+        <p>Can you think of other processes that could be modeled as state machines? Traffic lights? Washing machines? Social media algorithms? <span class="highlight">Everything is a state machine</span> if you think about it! 🤯</p>
+      `;
+      
+      modal.classList.add('show');
+    }
+
+    // Event listeners
+    states.forEach(state => {
+      state.addEventListener('click', () => {
+        const stateKey = state.dataset.state;
+        showModal(stateKey);
+      });
+    });
+
+    // Close modal when clicking outside
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') {
+        closeModal();
+      }
+    });
+
+    // Keyboard navigation
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeModal();
+      }
+    });
+
+    // Initialize everything
+    createParticles();
+    setInterval(animateStates, 2000);
+    animateStates(); // Start immediately
+
+    // Add some extra visual flair
+    document.addEventListener('mousemove', (e) => {
+      const particles = document.querySelectorAll('.particle');
+      const mouseX = e.clientX / window.innerWidth;
+      const mouseY = e.clientY / window.innerHeight;
+      
+      particles.forEach((particle, index) => {
+        if (index % 5 === 0) { // Only affect every 5th particle for performance
+          const influence = 0.5;
+          const currentLeft = parseFloat(particle.style.left);
+          const newLeft = currentLeft + (mouseX - 0.5) * influence;
+          particle.style.left = Math.max(0, Math.min(100, newLeft)) + '%';
+        }
+      });
+    });
+
+    // Add click sound effect simulation
+    states.forEach(state => {
+      state.addEventListener('click', () => {
+        state.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+          state.style.transform = '';
+        }, 150);
+      });
+    });
+
+    // Easter egg: Konami code
+    let konamiCode = [];
+    const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Up Up Down Down Left Right Left Right B A
+    
+    document.addEventListener('keydown', (e) => {
+      konamiCode.push(e.keyCode);
+      if (konamiCode.length > konami.length) {
+        konamiCode.shift();
+      }
+      
+      if (konamiCode.join(',') === konami.join(',')) {
+        // Activate rainbow mode
+        document.body.style.animation = 'rainbow 2s infinite';
+        states.forEach(state => {
+          state.style.animation = 'rainbow 2s infinite, pulse 2s infinite';
+        });
+        
+        // Add rainbow keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+          @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+          }
+        `;
+        document.head.appendChild(style);
+        
+        // Show secret message
+        setTimeout(() => {
+          alert('🌈 RAINBOW MODE ACTIVATED! You found the secret! 🌈');
+        }, 500);
+      }
+    });
   </script>
 </body>
 </html>
