@@ -1,533 +1,302 @@
 <!DOCTYPE html>
-<html lang="ca">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>La Roda de l'Aprenentatge - Cyberpunk Edition</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Learning Wheel</title>
+  <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap');
-    
+
     :root {
-      --neon-blue: #00ffff;
-      --neon-pink: #ff0080;
-      --neon-green: #00ff00;
-      --neon-purple: #8000ff;
-      --neon-yellow: #ffff00;
-      --dark-bg: #0a0a0a;
-      --darker-bg: #050505;
-      --text-light: #ffffff;
-      --glow-intensity: 0 0 20px;
+      --neon-blue:    #00ffff;
+      --neon-green:   #00ff00;
+      --neon-purple:  #8000ff;
+      --dark-bg:      #050505;
+      --text-light:   #ffffff;
+      --glow-light:   0 0 10px;
     }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin:0; padding:0; box-sizing:border-box; }
 
     body {
       font-family: 'Orbitron', monospace;
-      background: radial-gradient(circle at 50% 50%, #1a0033 0%, var(--dark-bg) 100%);
+      background: radial-gradient(circle at center, #1a0033 0%, var(--dark-bg) 100%);
       color: var(--text-light);
-      overflow: hidden;
-      min-height: 100vh;
-      position: relative;
+      overflow:hidden; min-height:100vh;
     }
 
-    /* Animated background particles */
+    /* Background particles */
     .particles {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      pointer-events:none; z-index:1;
     }
-
     .particle {
-      position: absolute;
-      width: 2px;
-      height: 2px;
-      background: var(--neon-blue);
-      border-radius: 50%;
-      animation: float 20s infinite linear;
-      box-shadow: var(--glow-intensity) var(--neon-blue);
+      position:absolute; width:2px; height:2px; background:var(--neon-blue);
+      border-radius:50%; animation:float 20s infinite linear;
+      box-shadow: var(--glow-light) var(--neon-blue);
     }
-
     @keyframes float {
-      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+      0%   { transform:translateY(100vh) rotate(0); opacity:0; }
+      10%,90% { opacity:1; }
+      100% { transform:translateY(-100vh) rotate(360deg); opacity:0; }
     }
 
     .container {
-      position: relative;
-      width: 100vw;
-      height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
+      position:relative; width:100vw; height:100vh;
+      display:flex; align-items:center; justify-content:center; z-index:2;
     }
-
     .wheel {
-      position: relative;
-      width: 80vmin;
-      height: 80vmin;
-      max-width: 800px;
-      max-height: 800px;
+      position:relative; width:80vmin; height:80vmin;
+      max-width:800px; max-height:800px;
     }
 
     .title {
-      position: absolute;
-      top: -80px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 2.5rem;
-      font-weight: 900;
-      text-align: center;
-      background: linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-green));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-shadow: 0 0 30px var(--neon-blue);
-      animation: titleGlow 3s ease-in-out infinite alternate;
+      position:absolute; top:-60px; left:50%; transform:translateX(-50%);
+      font-size:2.5rem; font-weight:900; text-align:center;
+      background:linear-gradient(45deg, var(--neon-purple), var(--neon-blue), var(--neon-green));
+      -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+      text-shadow:0 0 20px var(--neon-blue);
+      animation:titleGlow 3s ease-in-out infinite alternate;
     }
-
     @keyframes titleGlow {
-      0% { filter: brightness(1); }
-      100% { filter: brightness(1.5); }
+      0%   { filter:brightness(1); }
+      100% { filter:brightness(1.3); }
     }
 
     .state {
-      position: absolute;
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: var(--darker-bg);
-      border: 3px solid var(--neon-blue);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      z-index: 10;
-      box-shadow: 
-        var(--glow-intensity) var(--neon-blue),
-        inset 0 0 20px rgba(0, 255, 255, 0.1);
+      position:absolute; width:100px; height:100px; border-radius:50%;
+      background:var(--dark-bg); border:3px solid var(--neon-blue);
+      display:flex; align-items:center; justify-content:center; flex-direction:column;
+      cursor:pointer; transition:0.3s; box-shadow:var(--glow-light) var(--neon-blue), inset 0 0 10px rgba(0,255,255,0.1);
+      z-index:10;
     }
-
     .state:hover {
-      transform: scale(1.1);
-      border-color: var(--neon-pink);
-      box-shadow: 
-        var(--glow-intensity) var(--neon-pink),
-        0 0 40px var(--neon-pink),
-        inset 0 0 20px rgba(255, 0, 128, 0.2);
+      transform:scale(1.1);
+      border-color:var(--neon-purple);
+      box-shadow:
+        var(--glow-light) var(--neon-purple),
+        0 0 20px var(--neon-purple),
+        inset 0 0 10px rgba(128,0,255,0.2);
     }
-
     .state.active {
-      border-color: var(--neon-green);
-      box-shadow: 
-        var(--glow-intensity) var(--neon-green),
-        0 0 40px var(--neon-green),
-        inset 0 0 20px rgba(0, 255, 0, 0.2);
-      animation: pulse 2s infinite;
+      border-color:var(--neon-green);
+      animation:pulse 2s infinite;
+      box-shadow:
+        var(--glow-light) var(--neon-green),
+        0 0 20px var(--neon-green),
+        inset 0 0 10px rgba(0,255,0,0.2);
     }
-
     .state.visited {
-      border-color: var(--neon-purple);
-      box-shadow: 
-        var(--glow-intensity) var(--neon-purple),
-        inset 0 0 20px rgba(128, 0, 255, 0.2);
+      border-color:var(--neon-purple);
+      box-shadow:var(--glow-light) var(--neon-purple), inset 0 0 10px rgba(128,0,255,0.2);
     }
-
     @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
+      0%,100% { transform:scale(1); }
+      50%      { transform:scale(1.05); }
     }
 
     .state i {
-      font-size: 2rem;
-      color: var(--neon-blue);
-      text-shadow: 0 0 10px currentColor;
-      transition: all 0.3s ease;
+      font-size:1.8rem; color:var(--neon-blue); text-shadow:0 0 5px currentColor; transition:0.3s;
     }
-
-    .state:hover i {
-      color: var(--neon-pink);
-      transform: scale(1.2);
-    }
-
-    .state.active i {
-      color: var(--neon-green);
-    }
+    .state:hover i { color:var(--neon-purple); transform:scale(1.2); }
+    .state.active i { color:var(--neon-green); }
 
     .state span {
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      text-shadow: 0 0 5px currentColor;
+      margin-top:0.3rem; font-size:0.8rem; font-weight:700;
+      text-transform:uppercase; text-shadow:0 0 3px currentColor;
     }
 
-    /* State positions (circular arrangement) */
-    .state:nth-child(1) { top: 10%; left: 50%; transform: translateX(-50%); } /* PP */
-    .state:nth-child(2) { top: 25%; left: 75%; transform: translateX(-50%); } /* D */
-    .state:nth-child(3) { top: 50%; left: 85%; transform: translateX(-50%); } /* T */
-    .state:nth-child(4) { top: 75%; left: 75%; transform: translateX(-50%); } /* E */
-    .state:nth-child(5) { top: 90%; left: 50%; transform: translateX(-50%); } /* S */
-    .state:nth-child(6) { top: 75%; left: 25%; transform: translateX(-50%); } /* C */
-    .state:nth-child(7) { top: 50%; left: 15%; transform: translateX(-50%); } /* P */
-    .state:nth-child(8) { top: 25%; left: 25%; transform: translateX(-50%); } /* A */
+    /* 8 nodes around circle, starting Work at top */
+    .state:nth-child(1) { top:5%;  left:50%; transform:translate(-50%,0);      } /* Work */
+    .state:nth-child(2) { top:20%; left:80%; transform:translate(-50%,-50%); } /* Understand */
+    .state:nth-child(3) { top:50%; left:95%; transform:translate(-50%,-50%); } /* Solve */
+    .state:nth-child(4) { top:80%; left:80%; transform:translate(-50%,-50%); } /* Correct */
+    .state:nth-child(5) { top:95%; left:50%; transform:translate(-50%,-100%);} /* Think */
+    .state:nth-child(6) { top:80%; left:20%; transform:translate(-50%,-50%); } /* Practice */
+    .state:nth-child(7) { top:50%; left:5%;  transform:translate(-50%,-50%); } /* Perfect */
+    .state:nth-child(8) { top:20%; left:20%; transform:translate(-50%,-50%); } /* Rest */
 
-    /* SVG connections */
+    /* Connection lines */
     .connections {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 5;
+      position:absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:5;
     }
-
     .connection {
-      stroke: var(--neon-blue);
-      stroke-width: 3;
-      fill: none;
-      opacity: 0.6;
-      stroke-dasharray: 10, 5;
-      animation: dashMove 2s linear infinite;
-      filter: drop-shadow(0 0 5px var(--neon-blue));
+      stroke:var(--neon-blue); stroke-width:2; fill:none; opacity:0.5;
+      stroke-dasharray:5,5; animation:dashMove 2s linear infinite;
+      filter:drop-shadow(0 0 5px var(--neon-blue));
     }
-
     .connection.active {
-      stroke: var(--neon-green);
-      stroke-width: 4;
-      opacity: 1;
-      animation: dashMove 1s linear infinite, glow 2s ease-in-out infinite alternate;
+      stroke:var(--neon-green); stroke-width:3; opacity:1;
+      animation:dashMove 1s linear infinite, glow 2s ease-in-out infinite alternate;
     }
-
     @keyframes dashMove {
-      0% { stroke-dashoffset: 0; }
-      100% { stroke-dashoffset: 15; }
+      0%   { stroke-dashoffset:0; }
+      100% { stroke-dashoffset:10; }
     }
-
     @keyframes glow {
-      0% { filter: drop-shadow(0 0 5px var(--neon-green)); }
-      100% { filter: drop-shadow(0 0 15px var(--neon-green)); }
+      0%   { filter:drop-shadow(0 0 5px var(--neon-green)); }
+      100% { filter:drop-shadow(0 0 15px var(--neon-green)); }
     }
 
-    /* Modal styles */
+    /* Modal */
     .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.8);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      backdrop-filter: blur(5px);
+      position:fixed; top:0; left:0; width:100%; height:100%;
+      background:rgba(0,0,0,0.8); display:none;
+      align-items:center; justify-content:center; z-index:1000;
+      backdrop-filter:blur(5px);
     }
-
-    .modal.show {
-      display: flex;
-      animation: fadeIn 0.3s ease;
-    }
-
+    .modal.show { display:flex; animation:fadeIn 0.3s ease; }
     .modal-content {
-      background: var(--darker-bg);
-      border: 2px solid var(--neon-blue);
-      border-radius: 20px;
-      padding: 2rem;
-      max-width: 600px;
-      width: 90%;
-      max-height: 80vh;
-      overflow-y: auto;
-      position: relative;
-      box-shadow: 
-        var(--glow-intensity) var(--neon-blue),
-        inset 0 0 20px rgba(0, 255, 255, 0.1);
+      background:var(--dark-bg); border:2px solid var(--neon-blue);
+      border-radius:10px; padding:1.5rem; max-width:600px; width:90%;
+      max-height:80vh; overflow-y:auto; position:relative;
+      box-shadow:var(--glow-light) var(--neon-blue), inset 0 0 10px rgba(0,255,255,0.1);
     }
-
     .modal-header {
-      display: flex;
-      align-items: center;
-      margin-bottom: 1.5rem;
-      padding-bottom: 1rem;
-      border-bottom: 1px solid var(--neon-blue);
+      display:flex; align-items:center;
+      margin-bottom:1rem; padding-bottom:0.5rem; border-bottom:1px solid var(--neon-blue);
     }
-
     .modal-header i {
-      font-size: 2.5rem;
-      color: var(--neon-green);
-      margin-right: 1rem;
-      text-shadow: 0 0 10px currentColor;
+      font-size:2rem; color:var(--neon-green);
+      margin-right:0.5rem; text-shadow:0 0 5px currentColor;
     }
-
     .modal-title {
-      font-size: 1.8rem;
-      font-weight: 900;
-      color: var(--neon-green);
-      text-shadow: 0 0 10px currentColor;
+      font-size:1.5rem; font-weight:900;
+      color:var(--neon-green); text-shadow:0 0 5px currentColor;
     }
-
     .modal-body {
-      line-height: 1.6;
-      font-size: 1.1rem;
+      line-height:1.4; font-size:1rem;
     }
-
     .modal-body h3 {
-      color: var(--neon-pink);
-      margin: 1.5rem 0 1rem 0;
-      text-shadow: 0 0 5px currentColor;
+      color:var(--neon-purple); margin:1rem 0 0.5rem;
     }
-
     .modal-body p {
-      margin-bottom: 1rem;
-      color: var(--text-light);
+      margin-bottom:0.8rem;
     }
-
     .modal-body .highlight {
-      color: var(--neon-yellow);
-      font-weight: 700;
-      text-shadow: 0 0 5px currentColor;
+      color:var(--neon-green); font-weight:700;
     }
-
     .close-btn {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      background: none;
-      border: 2px solid var(--neon-pink);
-      color: var(--neon-pink);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      cursor: pointer;
-      font-size: 1.5rem;
-      transition: all 0.3s ease;
-      box-shadow: 0 0 10px var(--neon-pink);
+      position:absolute; top:0.5rem; right:0.5rem; background:none;
+      border:2px solid var(--neon-purple); color:var(--neon-purple);
+      width:30px; height:30px; border-radius:50%; font-size:1.2rem;
+      cursor:pointer; transition:0.3s; box-shadow:0 0 5px var(--neon-purple);
     }
-
     .close-btn:hover {
-      background: var(--neon-pink);
-      color: var(--dark-bg);
-      transform: scale(1.1);
+      background:var(--neon-purple); color:var(--dark-bg); transform:scale(1.1);
     }
 
+    /* Progress bar */
     .progress-bar {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 300px;
-      height: 10px;
-      background: var(--darker-bg);
-      border: 1px solid var(--neon-blue);
-      border-radius: 5px;
-      overflow: hidden;
-      z-index: 100;
+      position:fixed; bottom:20px; left:50%; transform:translateX(-50%);
+      width:300px; height:8px; background:var(--dark-bg);
+      border:1px solid var(--neon-blue); border-radius:4px; overflow:hidden;
+      z-index:100;
     }
-
     .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--neon-blue), var(--neon-green));
-      width: 0%;
-      transition: width 0.5s ease;
-      box-shadow: 0 0 10px var(--neon-blue);
+      height:100%; width:0%;
+      background:linear-gradient(90deg, var(--neon-blue), var(--neon-green));
+      transition:width 0.5s ease;
     }
 
+    /* “How I Built This” button */
     .engineering-btn {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: var(--darker-bg);
-      border: 2px solid var(--neon-yellow);
-      color: var(--neon-yellow);
-      padding: 10px 20px;
-      border-radius: 25px;
-      cursor: pointer;
-      font-family: 'Orbitron', monospace;
-      font-weight: 700;
-      transition: all 0.3s ease;
-      z-index: 100;
-      box-shadow: 0 0 15px var(--neon-yellow);
+      position:fixed; top:20px; right:20px; background:var(--dark-bg);
+      border:2px solid var(--neon-purple); color:var(--neon-purple);
+      padding:0.5rem 1rem; border-radius:20px; cursor:pointer;
+      font-family:'Orbitron', monospace; font-weight:700;
+      transition:0.3s; box-shadow:0 0 10px var(--neon-purple);
+      z-index:100;
     }
-
     .engineering-btn:hover {
-      background: var(--neon-yellow);
-      color: var(--dark-bg);
-      transform: scale(1.05);
+      background:var(--neon-purple); color:var(--dark-bg);
+      transform:scale(1.05);
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.8); }
-      to { opacity: 1; transform: scale(1); }
+      from { opacity:0; transform:scale(0.8); }
+      to   { opacity:1; transform:scale(1); }
     }
 
-    @media (max-width: 768px) {
-      .title {
-        font-size: 1.8rem;
-        top: -60px;
-      }
-      
-      .state {
-        width: 90px;
-        height: 90px;
-      }
-      
-      .state i {
-        font-size: 1.5rem;
-      }
-      
-      .state span {
-        font-size: 0.7rem;
-      }
-      
-      .modal-content {
-        padding: 1.5rem;
-      }
+    @media (max-width:768px) {
+      .title { font-size:1.8rem; top:-50px; }
+      .state { width:80px; height:80px; }
+      .state i { font-size:1.2rem; }
+      .state span { font-size:0.7rem; }
+      .modal-content { padding:1rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Animated background particles -->
   <div class="particles"></div>
 
   <div class="container">
     <div class="wheel">
-      <div class="title">LA RODA DE L'APRENENTATGE</div>
-      
-      <!-- States arranged in a circle -->
-      <div class="state" data-state="PP">
-        <i class="fas fa-star"></i>
-        <span>Perfecciono</span>
+      <div class="title">THE LEARNING WHEEL</div>
+
+      <div class="state" data-state="Work">
+        <i class="fas fa-briefcase"></i><span>Work</span>
       </div>
-      
-      <div class="state" data-state="D">
-        <i class="fas fa-coffee"></i>
-        <span>Descanso</span>
+      <div class="state" data-state="Understand">
+        <i class="fas fa-lightbulb"></i><span>Understand</span>
       </div>
-      
-      <div class="state" data-state="T">
-        <i class="fas fa-briefcase"></i>
-        <span>Treballo</span>
+      <div class="state" data-state="Solve">
+        <i class="fas fa-pencil-alt"></i><span>Solve</span>
       </div>
-      
-      <div class="state" data-state="E">
-        <i class="fas fa-lightbulb"></i>
-        <span>Entenc</span>
+      <div class="state" data-state="Correct">
+        <i class="fas fa-pen-fancy"></i><span>Correct</span>
       </div>
-      
-      <div class="state" data-state="S">
-        <i class="fas fa-pencil-alt"></i>
-        <span>Soluciono</span>
+      <div class="state" data-state="Think">
+        <i class="fas fa-brain"></i><span>Think</span>
       </div>
-      
-      <div class="state" data-state="C">
-        <i class="fas fa-pen-fancy"></i>
-        <span>Corregeixo</span>
+      <div class="state" data-state="Practice">
+        <i class="fas fa-cogs"></i><span>Practice</span>
       </div>
-      
-      <div class="state" data-state="P">
-        <i class="fas fa-brain"></i>
-        <span>Penso</span>
+      <div class="state" data-state="Perfect">
+        <i class="fas fa-star"></i><span>Perfect</span>
       </div>
-      
-      <div class="state" data-state="A">
-        <i class="fas fa-cogs"></i>
-        <span>Practico</span>
+      <div class="state" data-state="Rest">
+        <i class="fas fa-coffee"></i><span>Rest</span>
       </div>
 
-      <!-- SVG connections -->
       <svg class="connections" viewBox="0 0 100 100">
-        <!-- Connections between states -->
-        <path class="connection" d="M 50 10 Q 75 25 75 50" />
-        <path class="connection" d="M 75 50 Q 75 75 50 90" />
-        <path class="connection" d="M 50 90 Q 25 75 25 50" />
-        <path class="connection" d="M 25 50 Q 25 25 50 10" />
-        <!-- Inner connections -->
-        <path class="connection" d="M 50 10 Q 65 35 85 50" />
-        <path class="connection" d="M 85 50 Q 65 65 50 90" />
-        <path class="connection" d="M 50 90 Q 35 65 15 50" />
-        <path class="connection" d="M 15 50 Q 35 35 50 10" />
+        <path class="connection" d="M50 5   Q80 25 95 50"/>
+        <path class="connection" d="M95 50  Q80 75 50 95"/>
+        <path class="connection" d="M50 95  Q20 75 5 50"/>
+        <path class="connection" d="M5 50   Q20 25 50 5"/>
+
+        <path class="connection" d="M50 5   Q70 15 95 50"/>
+        <path class="connection" d="M95 50  Q70 85 50 95"/>
+        <path class="connection" d="M50 95  Q30 85 5 50"/>
+        <path class="connection" d="M5 50   Q30 15 50 5"/>
       </svg>
     </div>
   </div>
 
-  <!-- Progress bar -->
-  <div class="progress-bar">
-    <div class="progress-fill"></div>
-  </div>
+  <div class="progress-bar"><div class="progress-fill"></div></div>
 
-  <!-- Engineering button -->
   <button class="engineering-btn" onclick="showEngineeringModal()">
     <i class="fas fa-robot"></i> HOW I BUILT THIS
   </button>
 
-  <!-- Modal -->
   <div class="modal" id="modal">
     <div class="modal-content">
       <button class="close-btn" onclick="closeModal()">&times;</button>
       <div class="modal-header">
         <i class="fas fa-star"></i>
-        <h2 class="modal-title">State Title</h2>
+        <h2 class="modal-title">State Details</h2>
       </div>
-      <div class="modal-body">
-        <p>Modal content will be loaded here...</p>
-      </div>
+      <div class="modal-body"></div>
     </div>
   </div>
 
   <script>
-    // State data with advice for each learning phase
     const stateData = {
-      PP: {
-        title: "PERFECCIONO",
-        icon: "fas fa-star",
-        advice: "The final boss level of learning! 🌟",
-        content: `
-          <h3>You've reached the endgame!</h3>
-          <p>This is where good becomes <span class="highlight">legendary</span>. You're not just solving problems anymore - you're creating solutions that others will admire.</p>
-          
-          <h3>Pro Tips:</h3>
-          <p>• <span class="highlight">Teach others</span> - If you can explain it simply, you truly understand it</p>
-          <p>• <span class="highlight">Find edge cases</span> - What breaks your solution? That's where growth happens</p>
-          <p>• <span class="highlight">Optimize ruthlessly</span> - Can you do it faster? Cleaner? More elegantly?</p>
-          
-          <h3>Real Talk:</h3>
-          <p>Perfection isn't about being flawless - it's about <span class="highlight">continuous improvement</span>. Every expert was once a beginner who never gave up.</p>
-        `
-      },
-      D: {
-        title: "DESCANSO",
-        icon: "fas fa-coffee",
-        advice: "Your brain needs to process all that epic knowledge! ☕",
-        content: `
-          <h3>Rest is NOT wasted time!</h3>
-          <p>This is where the magic happens. Your brain is like a <span class="highlight">background process</span> - it keeps working even when you're not actively thinking about the problem.</p>
-          
-          <h3>Science-backed rest strategies:</h3>
-          <p>• <span class="highlight">Sleep on it</span> - Literally. Your brain consolidates memories during sleep</p>
-          <p>• <span class="highlight">Take walks</span> - Movement boosts creativity and problem-solving</p>
-          <p>• <span class="highlight">Do something completely different</span> - Let your subconscious work</p>
-          
-          <h3>Fun fact:</h3>
-          <p>Many breakthrough discoveries happened during rest periods. <span class="highlight">Archimedes</span> figured out displacement in a bath, and <span class="highlight">Newton</span> understood gravity while relaxing under a tree!</p>
-        `
-      },
-      T: {
-        title: "TREBALLO",
-        icon: "fas fa-briefcase",
+      Work: {
+        title: "WORK",
+        icon:  "fas fa-briefcase",
         advice: "Time to get your hands dirty! The grind is real but smart work beats hard work 💪",
         content: `
           <h3>Welcome to the arena!</h3>
@@ -542,9 +311,9 @@
           <p>Don't work harder, work <span class="highlight">smarter</span>. Every problem you solve here builds your problem-solving muscle for the next challenge.</p>
         `
       },
-      E: {
-        title: "ENTENC",
-        icon: "fas fa-lightbulb",
+      Understand: {
+        title: "UNDERSTAND",
+        icon:  "fas fa-lightbulb",
         advice: "That 'aha!' moment when everything clicks! 💡",
         content: `
           <h3>The lightbulb moment!</h3>
@@ -559,9 +328,9 @@
           <p>True understanding isn't just knowing <span class="highlight">what</span> works, but understanding <span class="highlight">why</span> it works. That's the difference between a script kiddie and a real engineer!</p>
         `
       },
-      S: {
-        title: "SOLUCIONO",
-        icon: "fas fa-pencil-alt",
+      Solve: {
+        title: "SOLVE",
+        icon:  "fas fa-pencil-alt",
         advice: "Problem-solving mode activated! You're like a detective now 🕵️",
         content: `
           <h3>Detective mode: ON</h3>
@@ -576,9 +345,9 @@
           <p>The best engineers aren't those who never encounter problems - they're the ones who <span class="highlight">love solving them</span>. Every bug is a mystery, every error is a clue!</p>
         `
       },
-      C: {
-        title: "CORREGEIXO",
-        icon: "fas fa-pen-fancy",
+      Correct: {
+        title: "CORRECT",
+        icon:  "fas fa-pen-fancy",
         advice: "Mistakes are just features in disguise! Time to debug like a boss 🐛",
         content: `
           <h3>Debugging is an art form!</h3>
@@ -593,9 +362,9 @@
           <p>Every bug you fix makes you stronger. The code that breaks you today will make you <span class="highlight">unbreakable</span> tomorrow. Embrace the struggle!</p>
         `
       },
-      P: {
-        title: "PENSO",
-        icon: "fas fa-brain",
+      Think: {
+        title: "THINK",
+        icon:  "fas fa-brain",
         advice: "Your brain is the ultimate computer! Time to overclock it 🧠",
         content: `
           <h3>Thinking is your superpower!</h3>
@@ -610,9 +379,9 @@
           <p>The difference between a junior and senior developer isn't just experience - it's <span class="highlight">thinking depth</span>. Take time to think before you code!</p>
         `
       },
-      A: {
-        title: "PRACTICO",
-        icon: "fas fa-cogs",
+      Practice: {
+        title: "PRACTICE",
+        icon:  "fas fa-cogs",
         advice: "Practice doesn't make perfect - it makes permanent! 🔧",
         content: `
           <h3>Repetition is the mother of skill!</h3>
@@ -626,89 +395,92 @@
           <h3>Level up approach:</h3>
           <p>Don't just practice until you get it right - practice until you <span class="highlight">can't get it wrong</span>. That's when it becomes second nature!</p>
         `
+      },
+      Perfect: {
+        title: "PERFECT",
+        icon:  "fas fa-star",
+        advice: "The final boss level of learning! 🌟",
+        content: `
+          <h3>You've reached the endgame!</h3>
+          <p>This is where good becomes <span class="highlight">legendary</span>. You're not just solving problems anymore - you're creating solutions that others will admire.</p>
+          
+          <h3>Pro Tips:</h3>
+          <p>• <span class="highlight">Teach others</span> - If you can explain it simply, you truly understand it</p>
+          <p>• <span class="highlight">Find edge cases</span> - What breaks your solution? That's where growth happens</p>
+          <p>• <span class="highlight">Optimize ruthlessly</span> - Can you do it faster? Cleaner? More elegantly?</p>
+          
+          <h3>Real Talk:</h3>
+          <p>Perfection isn't about being flawless - it's about <span class="highlight">continuous improvement</span>. Every expert was once a beginner who never gave up.</p>
+        `
+      },
+      Rest: {
+        title: "REST",
+        icon:  "fas fa-coffee",
+        advice: "Your brain needs to process all that epic knowledge! ☕",
+        content: `
+          <h3>Rest is NOT wasted time!</h3>
+          <p>This is where the magic happens. Your brain is like a <span class="highlight">background process</span> - it keeps working even when you're not actively thinking about the problem.</p>
+          
+          <h3>Science-backed rest strategies:</h3>
+          <p>• <span class="highlight">Sleep on it</span> - Literally. Your brain consolidates memories during sleep</p>
+          <p>• <span class="highlight">Take walks</span> - Movement boosts creativity and problem-solving</p>
+          <p>• <span class="highlight">Do something completely different</span> - Let your subconscious work</p>
+          
+          <h3>Fun fact:</h3>
+          <p>Many breakthrough discoveries happened during rest periods. <span class="highlight">Archimedes</span> figured out displacement in a bath, and <span class="highlight">Newton</span> understood gravity while relaxing under a tree!</p>
+        `
       }
     };
 
-    // Animation and interaction logic
-    let currentState = 0;
-    let visitedStates = new Set();
-    const states = document.querySelectorAll('.state');
-    const stateOrder = ['PP', 'D', 'T', 'E', 'S', 'C', 'P', 'A'];
-    
-    // Initialize particles
+    let idx = 0;
+    const order = ["Work","Understand","Solve","Correct","Think","Practice","Perfect","Rest"];
+    const visited = new Set();
+    const states      = document.querySelectorAll('.state');
+    const connections = document.querySelectorAll('.connection');
+
     function createParticles() {
-      const container = document.querySelector('.particles');
-      for (let i = 0; i < 50; i++) {
-        const particle = document.createElement('div');
-        particle.className = 'particle';
-        particle.style.left = Math.random() * 100 + '%';
-        particle.style.animationDelay = Math.random() * 20 + 's';
-        particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
-        container.appendChild(particle);
+      const c = document.querySelector('.particles');
+      for(let i=0; i<50; i++){
+        const p = document.createElement('div');
+        p.className = 'particle';
+        p.style.left = Math.random()*100+'%';
+        p.style.animationDelay = Math.random()*20+'s';
+        p.style.animationDuration = (Math.random()*10+15)+'s';
+        c.appendChild(p);
       }
     }
 
-    // State animation cycle
-    function animateStates() {
-      states.forEach(state => state.classList.remove('active'));
-      
-      const currentStateElement = document.querySelector(`[data-state="${stateOrder[currentState]}"]`);
-      if (currentStateElement) {
-        currentStateElement.classList.add('active');
-        
-        // Update connections
-        const connections = document.querySelectorAll('.connection');
-        connections.forEach(conn => conn.classList.remove('active'));
-        if (connections[currentState]) {
-          connections[currentState].classList.add('active');
-        }
-      }
-      
-      currentState = (currentState + 1) % stateOrder.length;
+    function animateStates(){
+      states.forEach(s=>s.classList.remove('active'));
+      connections.forEach(c=>c.classList.remove('active'));
+      const key = order[idx];
+      document.querySelector(`[data-state="${key}"]`)?.classList.add('active');
+      connections[idx]?.classList.add('active');
+      idx = (idx+1) % order.length;
     }
 
-    // Modal functionality
-    function showModal(stateKey) {
-      const modal = document.getElementById('modal');
-      const data = stateData[stateKey];
-      
-      if (!data) return;
-      
-      // Mark as visited
-      visitedStates.add(stateKey);
+    function showModal(key){
+      const data = stateData[key];
+      if(!data) return;
+      visited.add(key);
       updateProgress();
-      
-      // Update modal content
-      const modalTitle = modal.querySelector('.modal-title');
-      const modalIcon = modal.querySelector('.modal-header i');
-      const modalBody = modal.querySelector('.modal-body');
-      
-      modalTitle.textContent = data.title;
-      modalIcon.className = data.icon;
-      modalBody.innerHTML = data.content;
-      
-      // Show modal
-      modal.classList.add('show');
-      
-      // Mark state as visited
-      const stateElement = document.querySelector(`[data-state="${stateKey}"]`);
-      if (stateElement) {
-        stateElement.classList.add('visited');
-      }
+      document.querySelector('.modal-title').textContent = data.title;
+      document.querySelector('.modal-header i').className = data.icon;
+      document.querySelector('.modal-body').innerHTML = data.content;
+      document.getElementById('modal').classList.add('show');
+      document.querySelector(`[data-state="${key}"]`)?.classList.add('visited');
     }
 
-    function closeModal() {
-      const modal = document.getElementById('modal');
-      modal.classList.remove('show');
+    function closeModal(){
+      document.getElementById('modal').classList.remove('show');
     }
 
-    function updateProgress() {
-      const progress = (visitedStates.size / Object.keys(stateData).length) * 100;
-      const progressFill = document.querySelector('.progress-fill');
-      progressFill.style.width = progress + '%';
+    function updateProgress(){
+      const pct = visited.size / order.length * 100;
+      document.querySelector('.progress-fill').style.width = pct + '%';
     }
 
-    function showEngineeringModal() {
+    function showEngineeringModal(){
       const modal = document.getElementById('modal');
       const modalTitle = modal.querySelector('.modal-title');
       const modalIcon = modal.querySelector('.modal-header i');
@@ -744,95 +516,18 @@
         <p>Can you think of other processes that could be modeled as state machines? Traffic lights? Washing machines? Social media algorithms? <span class="highlight">Everything is a state machine</span> if you think about it! 🤯</p>
       `;
       
-      modal.classList.add('show');
+      modal.classList.add('show');  
     }
 
-    // Event listeners
-    states.forEach(state => {
-      state.addEventListener('click', () => {
-        const stateKey = state.dataset.state;
-        showModal(stateKey);
-      });
+    states.forEach(s=>s.addEventListener('click', ()=> showModal(s.dataset.state)));
+    document.getElementById('modal').addEventListener('click', e=> {
+      if(e.target.id==='modal') closeModal();
     });
+    document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
 
-    // Close modal when clicking outside
-    document.getElementById('modal').addEventListener('click', (e) => {
-      if (e.target.id === 'modal') {
-        closeModal();
-      }
-    });
-
-    // Keyboard navigation
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        closeModal();
-      }
-    });
-
-    // Initialize everything
     createParticles();
+    animateStates();
     setInterval(animateStates, 2000);
-    animateStates(); // Start immediately
-
-    // Add some extra visual flair
-    document.addEventListener('mousemove', (e) => {
-      const particles = document.querySelectorAll('.particle');
-      const mouseX = e.clientX / window.innerWidth;
-      const mouseY = e.clientY / window.innerHeight;
-      
-      particles.forEach((particle, index) => {
-        if (index % 5 === 0) { // Only affect every 5th particle for performance
-          const influence = 0.5;
-          const currentLeft = parseFloat(particle.style.left);
-          const newLeft = currentLeft + (mouseX - 0.5) * influence;
-          particle.style.left = Math.max(0, Math.min(100, newLeft)) + '%';
-        }
-      });
-    });
-
-    // Add click sound effect simulation
-    states.forEach(state => {
-      state.addEventListener('click', () => {
-        state.style.transform = 'scale(0.95)';
-        setTimeout(() => {
-          state.style.transform = '';
-        }, 150);
-      });
-    });
-
-    // Easter egg: Konami code
-    let konamiCode = [];
-    const konami = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65]; // Up Up Down Down Left Right Left Right B A
-    
-    document.addEventListener('keydown', (e) => {
-      konamiCode.push(e.keyCode);
-      if (konamiCode.length > konami.length) {
-        konamiCode.shift();
-      }
-      
-      if (konamiCode.join(',') === konami.join(',')) {
-        // Activate rainbow mode
-        document.body.style.animation = 'rainbow 2s infinite';
-        states.forEach(state => {
-          state.style.animation = 'rainbow 2s infinite, pulse 2s infinite';
-        });
-        
-        // Add rainbow keyframes
-        const style = document.createElement('style');
-        style.textContent = `
-          @keyframes rainbow {
-            0% { filter: hue-rotate(0deg); }
-            100% { filter: hue-rotate(360deg); }
-          }
-        `;
-        document.head.appendChild(style);
-        
-        // Show secret message
-        setTimeout(() => {
-          alert('🌈 RAINBOW MODE ACTIVATED! You found the secret! 🌈');
-        }, 500);
-      }
-    });
   </script>
 </body>
 </html>
