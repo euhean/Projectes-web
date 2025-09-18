@@ -106,7 +106,7 @@ body.vj-lightbox-open > *:not(#vj-lightbox) { filter: blur(8px) !important; poin
   }
 
   function makeThumbnail(imgObj, index) {
-    const box = createEl('div', { class: 'archive-item', dataset: { index: index } });
+    const box = createEl('div', { class: 'archive-item has-content', dataset: { index: index } });
     const im = createEl('img', { src: imgObj.src, alt: imgObj.caption || '', style: '' });
     box.appendChild(im);
     // click handler: open lightbox to this image

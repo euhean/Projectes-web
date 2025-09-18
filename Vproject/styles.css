@@ -4,8 +4,36 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
   --bg-dark: #0a0a0a;
-  --bg-light: #1a1a1a;
-  --text-primary: #f0f0f0;
+  --bg-light: #1a1a1/* Archive grid (thumbnails) */
+.archive-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; margin-top:2rem; min-height: 60px; }
+.archive-item {
+  aspect-ratio: 1;
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  transition: all .2s ease; cursor:pointer; overflow:hidden; position:relative; padding: .25rem;
+}
+/* ensure thumbnails cover area and keep aspect */
+.archive-item img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .25s ease; }
+/* Only show hover effects on items that have images */
+.archive-item:has(img):hover img { transform: scale(1.05); }
+.archive-item .thumb-caption {
+  position:absolute; bottom:6px; left:6px; right:6px; text-align:center;
+  font-size:.8rem; color:var(--text-secondary); background: rgba(0,0,0,.25); padding:4px 6px; border-radius:4px;
+}
+
+/* Empty state styling for archive grids */
+.archive-grid:empty::after {
+  content: "No content available yet";
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}mary: #f0f0f0;
   --text-secondary: #b0b0b0;
   --accent: #ffffff;
   --border: #333;
@@ -56,22 +84,66 @@ nav a:hover { color: var(--accent); text-shadow: 0 0 10px rgba(255,255,255,.5); 
   align-items:center;
   position:relative;
   background: radial-gradient(circle at center, var(--bg-light) 0%, var(--bg-dark) 100%);
+  overflow: hidden;
 }
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('assets/images/12.jpeg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(20px);
+  transform: scale(1.1);
+  transition: filter 0.15s ease-out;
+  z-index: -1;
+  opacity: 0.4;
+}
+
+.hero:hover::before {
+  filter: blur(0px);
+}
+
 .hero h1 {
   font-size: clamp(2rem, 8vw, 5rem);
   text-transform: uppercase;
   letter-spacing: 5px;
-  animation: glitch 3s infinite;
+  animation: glitch 6s infinite;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 2;
+  transition: opacity 0.15s ease-out;
 }
+
+.hero:hover h1 {
+  opacity: 0.2;
+}
+
 @keyframes glitch {
-  0%,100% { text-shadow: 2px 0 var(--border), -2px 0 var(--border); }
-  25% { text-shadow: -2px 0 var(--accent), 2px 0 var(--border); }
-  50% { text-shadow: 2px 0 var(--border), -2px 0 var(--accent); }
-  75% { text-shadow: 0 0 10px var(--accent); }
+  0%,90%,100% { text-shadow: 1px 0 var(--border), -1px 0 var(--border); }
+  95% { text-shadow: -1px 0 var(--accent), 1px 0 var(--border); }
+  97% { text-shadow: 1px 0 var(--border), -1px 0 var(--accent); }
+  99% { text-shadow: 0 0 8px var(--accent); }
 }
-.tagline { color: var(--text-secondary); font-size: 1.2rem; margin-bottom: 2rem; text-align:center; font-style: italic; }
-.pulse { animation: pulse 2s infinite; }
+.tagline { 
+  color: var(--text-secondary); 
+  font-size: 1.2rem; 
+  margin-bottom: 2rem; 
+  text-align:center; 
+  font-style: italic; 
+  position: relative;
+  z-index: 2;
+}
+.pulse { 
+  animation: pulse 2s infinite; 
+  position: relative;
+  z-index: 2;
+}
 @keyframes pulse { 0%,100% { opacity: .5 } 50% { opacity: 1 } }
 
 /* Sections */
@@ -128,7 +200,7 @@ h2:after {
 .narrative-item:hover { border-color:var(--accent); background:var(--bg-light); }
 
 /* Archive grid (thumbnails) */
-.archive-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; margin-top:2rem; }
+.archive-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap:1rem; margin-top:2rem; min-height: 60px; }
 .archive-item {
   aspect-ratio: 1;
   background: var(--bg-light);
@@ -138,10 +210,24 @@ h2:after {
 }
 /* ensure thumbnails cover area and keep aspect */
 .archive-item img { width:100%; height:100%; object-fit:cover; display:block; transition: transform .25s ease; }
-.archive-item:hover img { transform: scale(1.05); }
+/* Only items with content get hover effects */
+.archive-item.has-content:hover img { transform: scale(1.05); }
 .archive-item .thumb-caption {
   position:absolute; bottom:6px; left:6px; right:6px; text-align:center;
   font-size:.8rem; color:var(--text-secondary); background: rgba(0,0,0,.25); padding:4px 6px; border-radius:4px;
+}
+
+/* Empty state styling for archive grids */
+.archive-grid:empty::after {
+  content: "No content available yet";
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+  padding: 2rem;
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* About / Footer */
