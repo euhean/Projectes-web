@@ -11,16 +11,16 @@
   // category can be 'archive', 'concept', 'level', 'dialogue', 'combat', 'asset', etc.
   // If the grid for a category doesn't exist, thumbnails go to the first .archive-grid found.
   const IMAGES = [
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.58.18 (2).jpeg', caption: 'Asset iteration #1', category: 'asset' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.54.43 (1).jpeg', caption: 'Character sketch 1', category: 'concept' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.54.43 (2).jpeg', caption: 'Character sketch 2', category: 'concept' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.54.43.jpeg', caption: 'Level design sketch', category: 'level' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.56.16.jpeg', caption: 'Dialogue system sketch', category: 'dialogue' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.56.49.jpeg', caption: 'Combat system sketch', category: 'combat' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.57.27.jpeg', caption: 'Concept 1', category: 'concept' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.57.39.jpeg', caption: 'Concept 2', category: 'concept' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.58.17.jpeg', caption: 'Asset close-up', category: 'asset' },
-    { src: 'assets/images/WhatsApp Image 2025-08-13 at 13.58.18 (1).jpeg', caption: 'Final layout', category: 'asset' },
+    { src: 'assets/images/1.jpeg', caption: 'Sketch for Vin\'s human form', category: 'concept' },
+    { src: 'assets/images/2.jpeg', caption: 'Sketch for Vincent\'s demonic form', category: 'concept' },
+    { src: 'assets/images/3.jpeg', caption: 'Sketch for Valerie\'s demonic form (head)', category: 'concept' },
+    { src: 'assets/images/4.jpeg', caption: 'Sketch for Vin\'s demonic form', category: 'concept' },
+    { src: 'assets/images/5.jpeg', caption: 'Sketch for Vincent\'s demonic form #2', category: 'concept' },
+    { src: 'assets/images/6.jpeg', caption: 'Sketch for Valerie\'s human form', category: 'concept' },
+    { src: 'assets/images/7.jpeg', caption: 'Valerie concept (human form)', category: 'concept' },
+    { src: 'assets/images/10.jpeg', caption: 'Demonic form concept', category: 'concept' },
+    { src: 'assets/images/12.jpeg', caption: 'Final concept for the character trio', category: 'concept' },
+    { src: 'assets/images/13.jpeg', caption: 'Valerie\'s weapon concept', category: 'concept' },
     // add more like:
     // { src: 'assets/images/e41cb5a0-d024-401b-bf09-18b060c76360.jpeg', caption: 'Extra sketch', category: 'asset' },
   ];
