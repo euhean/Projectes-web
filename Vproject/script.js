@@ -95,49 +95,64 @@ body.vj-lightbox-open > *:not(#vj-lightbox) { filter: blur(8px) !important; poin
   }
 
   /* =========================
-     Thumbnails population
+     Concept circles and category handling
      ========================= */
-  function getGridForCategory(cat) {
-    // prefer category-specific id (e.g. #concept-grid). fallback to first .archive-grid
-    const id = cat ? document.getElementById(cat + '-grid') : null;
-    if (id) return id;
-    const archiveGrid = document.querySelector('.archive-grid');
-    return archiveGrid;
-  }
-
-  function makeThumbnail(imgObj, index) {
-    const box = createEl('div', { class: 'archive-item has-content', dataset: { index: index } });
-    const im = createEl('img', { src: imgObj.src, alt: imgObj.caption || '', style: '' });
-    box.appendChild(im);
-    // click handler: open lightbox to this image
-    box.addEventListener('click', () => openLightbox(index));
-    // subtle click animation (keeps your previous behavior)
-    box.addEventListener('click', function () {
-      this.style.animation = 'pulse 0.5s ease';
-      setTimeout(() => this.style.animation = '', 500);
+  function makeConceptCircle(imgObj, index) {
+    const circle = createEl('div', { 
+      class: 'concept-circle', 
+      dataset: { index: index },
+      style: `background-image: url('${imgObj.src}')`
     });
-    return box;
+    
+    // click handler: open lightbox to this image
+    circle.addEventListener('click', (e) => {
+      e.stopPropagation(); // Prevent category click
+      openLightbox(index);
+    });
+    
+    return circle;
   }
 
-  function populateThumbnails() {
-    // if no grids exist, try to find an archive-grid or create one in #archive section
-    const archiveSection = document.querySelector('#archive');
-    let defaultGrid = document.querySelector('.archive-grid');
-    if (!defaultGrid) {
-      if (archiveSection) {
-        defaultGrid = createEl('div', { class: 'archive-grid fade-in' });
-        archiveSection.appendChild(defaultGrid);
-      } else {
-        // fallback: append grid to body
-        defaultGrid = createEl('div', { class: 'archive-grid fade-in' });
-        document.body.appendChild(defaultGrid);
-      }
+  function populateConceptCircles() {
+    const conceptCirclesContainer = document.querySelector('.concept-circles');
+    if (!conceptCirclesContainer) return;
+    
+    // Clear existing circles
+    conceptCirclesContainer.innerHTML = '';
+    
+    // Add circles for concept images (max 6 to fit nicely)
+    const conceptImages = IMAGES.filter(img => img.category === 'concept');
+    const maxCircles = Math.min(conceptImages.length, 6);
+    
+    for (let i = 0; i < maxCircles; i++) {
+      const circle = makeConceptCircle(conceptImages[i], IMAGES.indexOf(conceptImages[i]));
+      conceptCirclesContainer.appendChild(circle);
     }
+    
+    // Update count
+    const countElement = document.querySelector('[data-category="concept"] .preview-count');
+    if (countElement) {
+      countElement.textContent = `${conceptImages.length} items`;
+    }
+  }
 
-    IMAGES.forEach((imgObj, i) => {
-      const grid = getGridForCategory(imgObj.category) || defaultGrid;
-      const thumb = makeThumbnail(imgObj, i);
-      grid.appendChild(thumb);
+  function setupCategoryClicks() {
+    document.querySelectorAll('.archive-category').forEach(category => {
+      const categoryType = category.dataset.category;
+      
+      category.addEventListener('click', () => {
+        if (categoryType === 'concept') {
+          // For concept category, open first image directly
+          const conceptImages = IMAGES.filter(img => img.category === 'concept');
+          if (conceptImages.length > 0) {
+            const firstIndex = IMAGES.indexOf(conceptImages[0]);
+            openLightbox(firstIndex);
+          }
+        } else {
+          // For other categories, could show "Coming Soon" or do nothing
+          console.log(`${categoryType} category clicked - no content yet`);
+        }
+      });
     });
   }
 
@@ -223,22 +238,14 @@ body.vj-lightbox-open > *:not(#vj-lightbox) { filter: blur(8px) !important; poin
     const heroTitle = document.querySelector('.hero h1');
     if (heroTitle) {
       heroTitle.addEventListener('mouseenter', () => heroTitle.style.animation = 'glitch 0.3s infinite');
-      heroTitle.addEventListener('mouseleave', () => heroTitle.style.animation = 'glitch 3s infinite');
+      heroTitle.addEventListener('mouseleave', () => heroTitle.style.animation = 'glitch 6s infinite');
     }
-
-    /* ---------- archive items initial click animation (original static items) ---------- */
-    document.querySelectorAll('.archive-item').forEach(item => {
-      // if the element is static from HTML, keep the pulse animation behavior
-      item.addEventListener('click', function () {
-        this.style.animation = 'pulse 0.5s ease';
-        setTimeout(() => this.style.animation = '', 500);
-      });
-    });
 
     /* ---------- build gallery (styles + DOM) ---------- */
     injectLightboxStyles();
     buildLightbox();
-    populateThumbnails();
+    populateConceptCircles();
+    setupCategoryClicks();
 
     /* ---------- lightbox event wiring ---------- */
     document.getElementById('vjClose').addEventListener('click', closeLightbox);

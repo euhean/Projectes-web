@@ -6,9 +6,10 @@
 :root {
   --bg-dark: #0a0a0a;
   --bg-light: #1a1a1a;
-  --text-primary: #f0f0f0;
-  --text-secondary: #b0b0b0;
-  --accent: #ffffff;
+  --text-primary: #f8f8f8;        /* Bright white for main content */
+  --text-secondary: #c0c0c0;      /* Light grey for subtitles */
+  --text-muted: #888888;          /* Darker grey for captions/meta */
+  --accent: #ffffff;              /* Pure white for title */
   --border: #333;
 }
 
@@ -91,6 +92,7 @@ nav a:hover { color: var(--accent); text-shadow: 0 0 10px rgba(255,255,255,.5); 
   position: relative;
   z-index: 2;
   transition: opacity 0.15s ease-out;
+  color: var(--accent);
 }
 
 .hero:hover h1 {
@@ -101,7 +103,7 @@ nav a:hover { color: var(--accent); text-shadow: 0 0 10px rgba(255,255,255,.5); 
   0%,90%,100% { text-shadow: 1px 0 var(--border), -1px 0 var(--border); }
   95% { text-shadow: -1px 0 var(--accent), 1px 0 var(--border); }
   97% { text-shadow: 1px 0 var(--border), -1px 0 var(--accent); }
-  99% { text-shadow: 0 0 8px var(--accent); }
+  99% { text-shadow: 0 0 12px var(--accent); }
 }
 
 .tagline { 
@@ -213,7 +215,7 @@ h2:after {
   letter-spacing: 2px; 
 }
 .character-trait { 
-  color: var(--text-secondary); 
+  color: var(--text-muted); 
   font-style: italic; 
   margin-bottom: 1rem; 
 }
@@ -231,51 +233,97 @@ h2:after {
   background: var(--bg-light); 
 }
 
-/* Archive Grid */
-.archive-grid { 
-  display: grid; 
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-  gap: 1rem; 
-  margin-top: 2rem; 
-  min-height: 60px; 
+/* Archive Categories */
+.archive-categories {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
 }
 
-.archive-item {
-  aspect-ratio: 1;
+.archive-category {
   background: var(--bg-light);
   border: 1px solid var(--border);
-  display: flex; 
-  align-items: center; 
-  justify-content: center;
-  transition: all .2s ease; 
-  cursor: pointer; 
-  overflow: hidden; 
-  position: relative; 
-  padding: .25rem;
-}
-
-.archive-item img { 
-  width: 100%; 
-  height: 100%; 
-  object-fit: cover; 
-  display: block; 
-  transition: transform .25s ease; 
-}
-
-.archive-item.has-content:hover img { 
-  transform: scale(1.05); 
-}
-
-.archive-grid:empty::after {
-  content: "No content available yet";
-  color: var(--text-secondary);
-  font-style: italic;
-  text-align: center;
+  border-radius: 8px;
   padding: 2rem;
-  grid-column: 1 / -1;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.archive-category:hover {
+  border-color: var(--accent);
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(255,255,255,0.1);
+}
+
+.archive-category h3 {
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.archive-category p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  line-height: 1.4;
+}
+
+.category-preview {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  margin-top: auto;
+}
+
+.preview-count {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Concept Art Circles */
+.concept-circles {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.concept-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.concept-circle:hover {
+  transform: scale(1.2);
+  border-color: var(--accent);
+  box-shadow: 0 0 15px rgba(255,255,255,0.3);
+}
+
+.concept-circle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease;
+}
+
+.concept-circle:hover::after {
+  opacity: 0;
 }
 
 /* About / Footer */
@@ -319,11 +367,11 @@ footer {
   .hero h1 { font-size: 2rem; }
   section { padding: 3rem 1rem; }
   h2 { font-size: 1.8rem; }
-  .archive-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .archive-categories { grid-template-columns: 1fr; }
 }
 
 @media (max-width: 480px) {
-  .archive-item { padding: .15rem; }
+  .concept-circle { width: 30px; height: 30px; }
 }
 
 /* Animations */
