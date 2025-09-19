@@ -1,43 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Valerie's Journey - Rhythm & Darkness</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Unbound - A rhythm-driven descent into corrupted minds. Game development portfolio.">
+  <title>Unbound - Rhythm & Darkness | Game Portfolio</title>
   <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
+  <!-- ===== NAVIGATION ===== -->
   <nav>
     <ul>
       <li><a href="#home">Home</a></li>
       <li><a href="#social">Connect</a></li>
       <li><a href="#gameplay">Gameplay</a></li>
-      <li><a href="#gdd">Characters</a></li>
+      <li><a href="#characters">Characters</a></li>
       <li><a href="#narrative">Narrative</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#archive">Archive</a></li>
     </ul>
   </nav>
 
-  <!-- site content wrapper (script uses this to blur the page) -->
-  <div id="site-content">
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="site-content">
+
+    <!-- ===== HERO SECTION ===== -->
     <section id="home" class="hero">
       <h1>Unbound</h1>
       <p class="tagline">A rhythm-driven descent into corrupted minds</p>
       <p class="pulse">PRE-ALPHA | Unity 2023 LTS</p>
     </section>
 
+    <!-- ===== SOCIAL LINKS ===== -->
     <section id="social">
       <h2>Connect</h2>
       <div class="social-links">
-        <a href="#" class="social-link"><div class="social-icon">IG</div><span>Instagram</span></a>
-        <a href="https://www.youtube.com/@eudaldhernandezanglada7426" class="social-link"><div class="social-icon">YT</div><span>YouTube</span></a>
-        <a href="https://github.com/euhean/Valerie-s-Journey" class="social-link"><div class="social-icon">GH</div><span>GitHub Repo</span></a>
-        <a href="https://github.com/users/euhean/projects/4" class="social-link"><div class="social-icon">GP</div><span>GitHub Project</span></a>
-        <a href="https://euhean.itch.io/" class="social-link"><div class="social-icon">IO</div><span>itch.io</span></a>
+        <a href="#" class="social-link" aria-label="Instagram">
+          <div class="social-icon">IG</div>
+          <span>Instagram</span>
+        </a>
+        <a href="https://www.youtube.com/@eudaldhernandezanglada7426" class="social-link" aria-label="YouTube Channel">
+          <div class="social-icon">YT</div>
+          <span>YouTube</span>
+        </a>
+        <a href="https://github.com/euhean/Valerie-s-Journey" class="social-link" aria-label="GitHub Repository">
+          <div class="social-icon">GH</div>
+          <span>GitHub Repo</span>
+        </a>
+        <a href="https://github.com/users/euhean/projects/4" class="social-link" aria-label="GitHub Project Board">
+          <div class="social-icon">GP</div>
+          <span>GitHub Project</span>
+        </a>
+        <a href="https://euhean.itch.io/" class="social-link" aria-label="itch.io Profile">
+          <div class="social-icon">IO</div>
+          <span>itch.io</span>
+        </a>
       </div>
     </section>
 
+    <!-- ===== GAMEPLAY SHOWCASE ===== -->
     <section id="gameplay">
       <h2>Gameplay Showcase</h2>
       <div class="video-container">
@@ -45,15 +67,16 @@
           src="https://www.youtube.com/embed/dQw4w9WgXcQ"
           frameborder="0"
           allowfullscreen
-          title="Gameplay Teaser"></iframe>
+          title="Unbound Gameplay Teaser">
+        </iframe>
       </div>
-      <p class="center-muted">Rhythm-driven combat meets narrative depth in this top-down action crawler</p>
+      <p>Rhythm-driven combat meets narrative depth in this top-down action crawler</p>
     </section>
 
-    <section id="gdd">
+    <!-- ===== CHARACTER SHOWCASE ===== -->
+    <section id="characters">
       <h2>The Protagonists</h2>
       <div class="characters fade-in">
-        <!-- your character cards (same as before) -->
         <div class="character-card">
           <h3>Vincent</h3>
           <p class="character-trait">"Brave defender of justice and love"</p>
@@ -72,16 +95,30 @@
       </div>
     </section>
 
+    <!-- ===== NARRATIVE CONCEPT ===== -->
     <section id="narrative">
       <h2>Narrative Concept</h2>
       <div class="narrative-grid fade-in">
-        <div class="narrative-item"><h3>Demon Doors</h3><p>Infected citizens harbor portals to the underworld within their minds.</p></div>
-        <div class="narrative-item"><h3>Symbiotic Powers</h3><p>Pacts with lesser devils grant abilities at a cost.</p></div>
-        <div class="narrative-item"><h3>Mind Infiltration</h3><p>Enter corrupted minds to shut the doors and free the victims.</p></div>
-        <div class="narrative-item"><h3>Soul Price</h3><p>Each hero paid a portion of their soul for power.</p></div>
+        <div class="narrative-item">
+          <h3>Demon Doors</h3>
+          <p>Infected citizens harbor portals to the underworld within their minds.</p>
+        </div>
+        <div class="narrative-item">
+          <h3>Symbiotic Powers</h3>
+          <p>Pacts with lesser devils grant abilities at a cost.</p>
+        </div>
+        <div class="narrative-item">
+          <h3>Mind Infiltration</h3>
+          <p>Enter corrupted minds to shut the doors and free the victims.</p>
+        </div>
+        <div class="narrative-item">
+          <h3>Soul Price</h3>
+          <p>Each hero paid a portion of their soul for power.</p>
+        </div>
       </div>
     </section>
 
+    <!-- ===== ABOUT SECTION ===== -->
     <section id="about">
       <h2>Mission Statement</h2>
       <div class="about-content fade-in">
@@ -90,72 +127,43 @@
       </div>
     </section>
 
-    <!-- ===== Archive section with dark box components ===== -->
+    <!-- ===== CONCEPT ARCHIVE ===== -->
     <section id="archive">
-      <h2>Development Archive</h2>
-      <div class="archive-categories fade-in">
+      <h2>Archive</h2>
+      <div class="archive-content">
+        <!-- Concept Category -->
+        <div class="archive-category" data-category="concept" aria-label="Concept Art Gallery">
+          <h3>Concept</h3>
+          <div class="concept-circles"></div>
+        </div>
         
-        <div class="archive-category" data-category="asset">
-          <h3>Asset Iteration</h3>
-          <p>Character designs, sprites, and visual assets</p>
-          <div class="category-preview">
-            <span class="preview-count">0 items</span>
-          </div>
+        <!-- Art Category -->
+        <div class="archive-category" data-category="art" aria-label="Art Gallery">
+          <h3>Art</h3>
+          <div class="concept-circles"></div>
         </div>
-
-        <div class="archive-category" data-category="level">
-          <h3>Level Design</h3>
-          <p>Environment sketches and layout concepts</p>
-          <div class="category-preview">
-            <span class="preview-count">0 items</span>
-          </div>
+        
+        <!-- Characters Category -->
+        <div class="archive-category" data-category="characters" aria-label="Character Designs">
+          <h3>Characters</h3>
+          <div class="concept-circles"></div>
         </div>
-
-        <div class="archive-category" data-category="dialogue">
-          <h3>Dialogue System</h3>
-          <p>Conversation trees and character interactions</p>
-          <div class="category-preview">
-            <span class="preview-count">0 items</span>
-          </div>
-        </div>
-
-        <div class="archive-category" data-category="combat">
-          <h3>Combat System</h3>
-          <p>Mechanics, balance, and rhythm integration</p>
-          <div class="category-preview">
-            <span class="preview-count">0 items</span>
-          </div>
-        </div>
-
-        <div class="archive-category" data-category="concept">
-          <h3>Concept Art</h3>
-          <p>Character concepts and visual development</p>
-          <div class="category-preview">
-            <div class="concept-circles">
-              <!-- Circles will be populated by JavaScript -->
-            </div>
-            <span class="preview-count">10 items</span>
-          </div>
-        </div>
-
-        <div class="archive-category" data-category="general">
-          <h3>General Archive</h3>
-          <p>Miscellaneous development materials</p>
-          <div class="category-preview">
-            <span class="preview-count">0 items</span>
-          </div>
-        </div>
-
       </div>
     </section>
 
-    <footer>
-      <p>&copy; 2025 Valerie's Journey | Pre-Alpha Build</p>
-      <p class="pulse" style="margin-top: 1rem;">Rhythm & Darkness Await</p>
-    </footer>
-  </div> <!-- /site-content -->
+    <!-- ===== LIGHTBOX GALLERY ===== -->
+    <div id="lightbox" class="lightbox" aria-hidden="true" role="dialog" aria-labelledby="lightbox-title">
+      <div class="lightbox-content">
+        <span class="close" aria-label="Close gallery">&times;</span>
+        <img id="lightbox-img" src="" alt="Gallery image">
+        <button class="prev" aria-label="Previous image">&#10094;</button>
+        <button class="next" aria-label="Next image">&#10095;</button>
+        <div class="lightbox-caption" id="lightbox-title"></div>
+      </div>
+    </div>
+  </main>
 
-  <!-- the script.js you already have to paste (replace existing) -->
-  <script src="script.js" defer></script>
+  <!-- ===== JAVASCRIPT ===== -->
+  <script src="script.js"></script>
 </body>
 </html>
