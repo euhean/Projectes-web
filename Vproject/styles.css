@@ -37,7 +37,7 @@
   --space-md: 1.5rem;
   --space-lg: 2rem;
   --space-xl: 3rem;
-  --space-xxl: 5rem;             /* Extra large spacing for section separation */
+  --space-xxl: 8rem;             /* MUCH BIGGER spacing for section separation */
 }
 
 /* ===========================================
@@ -182,21 +182,21 @@ nav a:hover {
    LAYOUT & SECTIONS
    =========================================== */
 section { 
-  padding: calc(var(--space-xl) * 1.5) var(--space-lg); /* Increased internal padding */
+  padding: calc(var(--space-xl) * 2) var(--space-lg); /* BIGGER internal padding */
   max-width: 900px; /* Reduced from 1200px for better focus */
   margin: 0 auto; 
-  margin-bottom: var(--space-xxl); /* Much larger spacing between sections */
+  margin-bottom: calc(var(--space-xxl) * 1.5); /* MASSIVE spacing between sections */
 }
 
 /* Hero section gets full width and special spacing */
 .hero {
   max-width: none;
-  margin-bottom: var(--space-xxl); /* Add spacing after hero too */
+  margin-bottom: calc(var(--space-xxl) * 2); /* HUGE spacing after hero */
 }
 
 /* First section after hero gets extra top margin */
 #social {
-  margin-top: var(--space-xxl);
+  margin-top: calc(var(--space-xxl) * 1.5); /* EXTRA spacing after hero */
 }
 
 section:nth-child(even) { 
