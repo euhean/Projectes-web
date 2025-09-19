@@ -37,6 +37,7 @@
   --space-md: 1.5rem;
   --space-lg: 2rem;
   --space-xl: 3rem;
+  --space-xxl: 5rem;             /* Extra large spacing for section separation */
 }
 
 /* ===========================================
@@ -110,7 +111,6 @@ nav a:hover {
   justify-content: center;
   align-items: center;
   position: relative;
-  background: radial-gradient(circle at center, var(--bg-light) 0%, var(--bg-dark) 100%);
   overflow: hidden;
 }
 
@@ -121,7 +121,7 @@ nav a:hover {
   left: 50%;
   width: 100vw;
   height: 100vh;
-  background-image: url('./assets/images/12.jpeg');
+  background-image: url('assets/images/12.jpeg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -182,16 +182,21 @@ nav a:hover {
    LAYOUT & SECTIONS
    =========================================== */
 section { 
-  padding: var(--space-xl) var(--space-lg); 
+  padding: calc(var(--space-xl) * 1.5) var(--space-lg); /* Increased internal padding */
   max-width: 900px; /* Reduced from 1200px for better focus */
   margin: 0 auto; 
-  margin-bottom: var(--space-xl); /* Add spacing between sections */
+  margin-bottom: var(--space-xxl); /* Much larger spacing between sections */
 }
 
-/* Hero section gets full width */
+/* Hero section gets full width and special spacing */
 .hero {
   max-width: none;
-  margin-bottom: 0;
+  margin-bottom: var(--space-xxl); /* Add spacing after hero too */
+}
+
+/* First section after hero gets extra top margin */
+#social {
+  margin-top: var(--space-xxl);
 }
 
 section:nth-child(even) { 
@@ -547,11 +552,12 @@ h2:after {
     --font-scale-lg: 1.4rem;
     --space-xl: 2rem;
     --space-lg: 1.5rem;
+    --space-xxl: 3.5rem; /* Reduced but still generous spacing on tablets */
   }
   
   nav ul { gap: 1rem; }
   nav { padding: 0.75rem 1rem; }
-  section { padding: var(--space-xl) var(--space-sm); }
+  section { padding: calc(var(--space-xl) * 1.2) var(--space-sm); }
   .archive-content { grid-template-columns: 1fr; gap: 1.5rem; }
   .social-links { gap: 2rem; }
   .characters { grid-template-columns: 1fr; }
@@ -562,6 +568,7 @@ h2:after {
   :root {
     --font-scale-xl: 1.8rem;
     --font-scale-lg: 1.2rem;
+    --space-xxl: 2.5rem; /* Even more conservative on mobile */
   }
   
   .hero { padding: 0 1rem; }
@@ -574,6 +581,10 @@ h2:after {
 }
 
 @media (max-width: 320px) {
+  :root {
+    --space-xxl: 2rem; /* Minimum comfortable spacing on very small screens */
+  }
+  
   section { padding: var(--space-lg) 0.75rem; }
   .archive-category { padding: 1rem; }
   .concept-circle { width: 24px; height: 24px; }
