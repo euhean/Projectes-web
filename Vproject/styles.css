@@ -127,28 +127,27 @@ nav a:hover {
   background-repeat: no-repeat;
   filter: blur(20px);
   transform: translate(-50%, -50%) scale(1.1);
-  transition: filter 0.15s ease-out;
+  transition: filter 0.3s ease-out;
   z-index: -1;
   opacity: 0.6;
 }
 
-.hero:hover::before {
+.hero.title-hovered::before {
   filter: blur(0px);
 }
 
 .hero h1 {
   font-size: clamp(2rem, 8vw, 5rem);
+  font-family: 'Impact', 'Arial Black', 'Franklin Gothic Bold', sans-serif;
+  font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 5px;
   animation: glitch 6s infinite;
   margin-bottom: 1rem;
   position: relative;
   z-index: 2;
-  transition: opacity 0.15s ease-out;
-}
-
-.hero:hover h1 {
-  opacity: 0.2;
+  transition: opacity 0.3s ease-out;
+  cursor: pointer;
 }
 
 @keyframes glitch {
@@ -184,8 +183,15 @@ nav a:hover {
    =========================================== */
 section { 
   padding: var(--space-xl) var(--space-lg); 
-  max-width: 1200px; 
+  max-width: 900px; /* Reduced from 1200px for better focus */
   margin: 0 auto; 
+  margin-bottom: var(--space-xl); /* Add spacing between sections */
+}
+
+/* Hero section gets full width */
+.hero {
+  max-width: none;
+  margin-bottom: 0;
 }
 
 section:nth-child(even) { 
@@ -490,6 +496,14 @@ h2:after {
   margin: 0 auto; 
   text-align: center; 
   line-height: 1.8; 
+}
+
+/* Gameplay section text centering */
+#gameplay p {
+  text-align: center;
+  margin: 0 auto;
+  max-width: 600px;
+  margin-top: var(--space-md);
 }
 
 .video-container { 

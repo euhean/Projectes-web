@@ -197,16 +197,22 @@
     });
   }
 
-  // Hero title glitch effect
+  // Hero title glitch effect and background focus
   function setupHeroEffects() {
     const heroTitle = document.querySelector('.hero h1');
-    if (heroTitle) {
+    const heroSection = document.querySelector('.hero');
+    
+    if (heroTitle && heroSection) {
       heroTitle.addEventListener('mouseenter', () => {
-        heroTitle.style.animation = 'glitch 0.3s infinite';
+        heroTitle.style.animation = 'glitch 0.2s infinite';
+        heroTitle.style.opacity = '0.3';
+        heroSection.classList.add('title-hovered');
       });
       
       heroTitle.addEventListener('mouseleave', () => {
         heroTitle.style.animation = 'glitch 6s infinite';
+        heroTitle.style.opacity = '1';
+        heroSection.classList.remove('title-hovered');
       });
     }
   }
